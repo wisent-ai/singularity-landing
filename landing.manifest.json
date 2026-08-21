@@ -1,9 +1,13 @@
 {
-  "schemaVersion": 1,
-  "generator": "@wisent-ai/landing-cli@0.1.0",
-  "generatedAt": "2026-08-21T01:58:37.411Z",
+  "schemaVersion": 2,
+  "generator": "@wisent-ai/landing-cli@0.2.0",
+  "generatedAt": "2026-08-21T05:58:05.437Z",
   "product": "Singularity",
   "briefDigest": "0338e9afc66b05fecdfaf78ae36b7803f9a30db2495b04498c7622a6bc1140bc",
+  "contextDigest": "73c3eafc2f3fda60fd667b527ea0496293d0b7ede95900aef4cfd97b3d4bf578",
+  "componentPlanDigest": "cb747dfef1686d463e7de72e8d62ff6fdf0d0e88b38304c2838cd5170d144167",
+  "componentCatalogDigest": "a02cb478c26f059eb2840ca6a0f2359877de0936c0ef56770f5dd9a31626a298",
+  "componentRuntimeDigest": "f39cc9e6221de9adf5e82d6f16eb3cbdf46e4b58f1d9a805fecc0a1ae717c657",
   "planDigest": "639fe08acdf1c25762b3744b8849f98ed2ba910e659912c4aad90f4fea214e4d",
   "tokens": {
     "path": "/Users/lukaszbartoszcze/Documents/CodingProjects/Wisent/wisent-components/tokens.json",
@@ -14,18 +18,16 @@
     ".gitignore",
     "next.config.ts",
     "package.json",
+    "scripts/verify-approval.mjs",
     "src/app/globals.css",
     "src/app/layout.tsx",
     "src/app/page.tsx",
     "src/app/robots.ts",
     "src/app/sitemap.ts",
-    "src/components/Footer.tsx",
-    "src/components/Header.tsx",
-    "src/components/PrimaryAction.tsx",
-    "src/components/Sections.tsx",
+    "src/components/landing-components.js",
+    "src/content/components.json",
     "src/content/plan.json",
     "src/content/site.json",
-    "src/content/types.ts",
     "tsconfig.json"
   ]
 }
