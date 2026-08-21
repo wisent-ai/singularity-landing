@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "generator": "@wisent-ai/landing-cli@0.1.0",
+  "generatedAt": "2026-08-21T01:58:37.411Z",
+  "product": "Singularity",
+  "briefDigest": "0338e9afc66b05fecdfaf78ae36b7803f9a30db2495b04498c7622a6bc1140bc",
+  "planDigest": "639fe08acdf1c25762b3744b8849f98ed2ba910e659912c4aad90f4fea214e4d",
+  "tokens": {
+    "path": "/Users/lukaszbartoszcze/Documents/CodingProjects/Wisent/wisent-components/tokens.json",
+    "digest": "29a00929f58750f9c7a2f59936bdd59bd22e439f76b5575ca57a0f20513db9df"
+  },
+  "fonts": [],
+  "files": [
+    ".gitignore",
+    "next.config.ts",
+    "package.json",
+    "src/app/globals.css",
+    "src/app/layout.tsx",
+    "src/app/page.tsx",
+    "src/app/robots.ts",
+    "src/app/sitemap.ts",
+    "src/components/Footer.tsx",
+    "src/components/Header.tsx",
+    "src/components/PrimaryAction.tsx",
+    "src/components/Sections.tsx",
+    "src/content/plan.json",
+    "src/content/site.json",
+    "src/content/types.ts",
+    "tsconfig.json"
+  ]
+}

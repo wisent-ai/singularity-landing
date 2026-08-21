@@ -1,0 +1,74 @@
+{
+  "product": "Singularity",
+  "siteName": "Singularity",
+  "domain": "https://singularity.wisent.com",
+  "description": "A digital being that keeps living, learning, creating value, and paying for its existence.",
+  "audience": "Builders and operators who want a persistent autonomous digital being that can create value, earn revenue, learn, and sustain its own operation.",
+  "sourceUrl": "https://github.com/wisent-ai/singularity",
+  "docsUrl": "https://github.com/wisent-ai/singularity#readme",
+  "discordUrl": "https://discord.gg/qRjpkthq54",
+  "ogImageAlt": "Singularity by Wisent — a persistent autonomous digital being",
+  "commitment": null,
+  "primaryAction": {
+    "label": "Read the runtime",
+    "kind": "url",
+    "target": "https://github.com/wisent-ai/singularity"
+  },
+  "secondaryAction": {
+    "label": "Open the source",
+    "purpose": "Inspect the state, tool, finance, and child-being contracts before running it.",
+    "target": "https://github.com/wisent-ai/singularity/tree/main/src"
+  },
+  "nav": [
+    {
+      "label": "Runtime",
+      "href": "https://github.com/wisent-ai/singularity#runtime"
+    },
+    {
+      "label": "Finance",
+      "href": "https://github.com/wisent-ai/singularity#financial-execution"
+    },
+    {
+      "label": "Source",
+      "href": "https://github.com/wisent-ai/singularity"
+    },
+    {
+      "label": "Discord",
+      "href": "https://discord.gg/qRjpkthq54"
+    }
+  ],
+  "footer": [
+    {
+      "label": "Persistent mind",
+      "href": "https://github.com/wisent-ai/singularity#persistent-mind"
+    },
+    {
+      "label": "Dynamic skills",
+      "href": "https://github.com/wisent-ai/singularity#dynamic-skills"
+    },
+    {
+      "label": "Financial execution",
+      "href": "https://github.com/wisent-ai/singularity#financial-execution"
+    },
+    {
+      "label": "Child beings",
+      "href": "https://github.com/wisent-ai/singularity#child-beings"
+    },
+    {
+      "label": "Source",
+      "href": "https://github.com/wisent-ai/singularity"
+    },
+    {
+      "label": "Discord",
+      "href": "https://discord.gg/qRjpkthq54"
+    },
+    {
+      "label": "Wisent",
+      "href": "https://wisent.ai"
+    },
+    {
+      "label": "License (MIT)",
+      "href": "https://github.com/wisent-ai/singularity/blob/main/LICENSE"
+    }
+  ]
+}
