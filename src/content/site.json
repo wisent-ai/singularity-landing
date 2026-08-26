@@ -5,7 +5,7 @@
   "description": "A digital being that keeps living, learning, creating value, and paying for its existence.",
   "audience": "Builders and operators who want a persistent autonomous digital being that can create value, earn revenue, learn, and sustain its own operation.",
   "sourceUrl": "https://github.com/wisent-ai/singularity",
-  "docsUrl": "https://github.com/wisent-ai/singularity#readme",
+  "docsUrl": "https://singularity.wisent.com/docs",
   "discordUrl": "https://discord.gg/qRjpkthq54",
   "ogImageAlt": "Singularity by Wisent — a persistent autonomous digital being",
   "commitment": null,
@@ -20,6 +20,10 @@
     "target": "https://github.com/wisent-ai/singularity/tree/main/src"
   },
   "nav": [
+    {
+      "label": "Docs",
+      "href": "/docs"
+    },
     {
       "label": "Runtime",
       "href": "https://github.com/wisent-ai/singularity#runtime"
@@ -38,6 +42,10 @@
     }
   ],
   "footer": [
+    {
+      "label": "Documentation",
+      "href": "/docs"
+    },
     {
       "label": "Persistent mind",
       "href": "https://github.com/wisent-ai/singularity#persistent-mind"
