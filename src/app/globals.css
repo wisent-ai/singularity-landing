@@ -626,3 +626,22 @@ h3 code,
 .docs-article pre { overflow: auto; padding: var(--space-xl); background: var(--color-almost-black); color: var(--color-white); border-radius: 10px; }
 .docs-article pre code { padding: 0; border: 0; background: transparent; color: inherit; }
 @media (max-width: 760px) { .docs-shell { grid-template-columns: 1fr; } .docs-shell > aside { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--color-border); } .docs-shell > main { padding: 32px 20px; } }
+
+/* First-use walkthrough */
+.first-use-scrim { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 20px; background: rgb(20 20 18 / 72%); backdrop-filter: blur(5px); }
+.first-use-card { width: min(560px, 100%); padding: clamp(24px, 5vw, 44px); border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-white); box-shadow: 0 24px 80px rgb(0 0 0 / 24%); }
+.first-use-topline { display: flex; justify-content: space-between; margin-bottom: var(--space-xl); color: var(--color-secondary-text); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.first-use-card h2 { font-size: clamp(1.8rem, 5vw, 3rem); }
+.first-use-card > p { margin-top: var(--space-lg); color: var(--color-secondary-text); line-height: 1.7; }
+.first-use-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-block: var(--space-xl); }
+.first-use-progress i { height: 3px; background: var(--color-border); }
+.first-use-progress i.is-done { background: var(--color-brand); }
+.first-use-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); }
+.first-use-primary, .first-use-dismiss { border: 0; font: inherit; cursor: pointer; }
+.first-use-primary { display: inline-flex; gap: 20px; align-items: center; padding: 12px 18px; border-radius: 7px; background: var(--color-almost-black); color: var(--color-white); font-weight: 700; text-decoration: none; }
+.first-use-dismiss { padding: 8px 0; background: transparent; color: var(--color-secondary-text); text-decoration: underline; }
+.walkthrough-settings { padding-block: var(--space-xl); border-top: 1px solid var(--color-border); background: var(--color-white); }
+.walkthrough-settings .shell { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); }
+.walkthrough-settings h2 { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+.walkthrough-settings button { border: 0; background: transparent; color: var(--color-secondary-text); font: inherit; cursor: pointer; text-decoration: underline; }
+@media (max-width: 520px) { .first-use-actions { align-items: stretch; flex-direction: column; } .first-use-primary { justify-content: space-between; } }

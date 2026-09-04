@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "product_id": "singularity-landing",
+  "journey_id": "first-use",
+  "journey_version": "2026-09-03.1",
+  "entry_screen_id": "welcome",
+  "first_success_fact": "runtime_source_opened",
+  "published_at": "2026-09-03T00:00:00Z",
+  "source_revision": "singularity-landing-first-use-2026-09-03.1",
+  "screens": [
+    {
+      "screen_id": "welcome",
+      "screen_kind": "promise",
+      "title_key": "singularity_landing.first_use.welcome.title",
+      "body_key": "singularity_landing.first_use.welcome.body",
+      "required": true,
+      "actions": ["advance"],
+      "transitions": [{ "next_screen_id": "orientation", "reason_code": "site_scope_explained", "priority": 10 }],
+      "presentation": {
+        "title": "Meet Singularity",
+        "body": "This is Singularity's public introduction and documentation, not a signed-in application. There is no account or private workspace here. Use this short tour to understand the autonomous runtime, then inspect the code that implements it.",
+        "action_label": "Next"
+      }
+    },
+    {
+      "screen_id": "orientation",
+      "screen_kind": "explanation",
+      "title_key": "singularity_landing.first_use.orientation.title",
+      "body_key": "singularity_landing.first_use.orientation.body",
+      "required": true,
+      "actions": ["advance"],
+      "transitions": [{ "next_screen_id": "open_runtime", "reason_code": "navigation_explained", "priority": 10 }],
+      "presentation": {
+        "title": "Read the system before you run it",
+        "body": "The page maps the persistent mind, dynamic skills, financial execution and child-being contracts. Docs explain the interfaces in detail. Runtime links take you to the public repository, where the implementation and operating instructions live.",
+        "action_label": "Next"
+      }
+    },
+    {
+      "screen_id": "open_runtime",
+      "screen_kind": "first_success",
+      "title_key": "singularity_landing.first_use.open_runtime.title",
+      "body_key": "singularity_landing.first_use.open_runtime.body",
+      "required": true,
+      "completion_evidence": { "kind": "fact", "fact": "runtime_source_opened", "operator": "eq", "value": true },
+      "actions": ["open_runtime", "complete"],
+      "transitions": [],
+      "presentation": {
+        "title": "Open the runtime source",
+        "body": "Choose Read the runtime to open Singularity's repository and inspect the real system. Reaching that source is the first useful result this public site can provide, and it completes the walkthrough. Show the walkthrough again is available in Settings at the bottom of every page.",
+        "action_label": "Read the runtime",
+        "dismiss_label": "Close the walkthrough"
+      }
+    }
+  ],
+  "analytics_contract": {
+    "contract_version": "1",
+    "surface": "web_first_use",
+    "exposure_event": "onboarding_step_viewed",
+    "primary_action_event": "onboarding_step_completed",
+    "completion_event": "onboarding_completed",
+    "first_success_event": "onboarding_first_success_observed"
+  }
+}

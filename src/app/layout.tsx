@@ -37,6 +37,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     {chosen("landing.header") ? <LandingHeader site={site} /> : null}
     <main id="main">{children}</main>
     {chosen("landing.footer") ? <LandingFooter site={site} /> : null}
+    <section className="walkthrough-settings" aria-labelledby="walkthrough-settings-title">
+      <div className="shell">
+        <h2 id="walkthrough-settings-title">Settings</h2>
+        <form action="/walkthrough/replay" method="post">
+          <button type="submit">Show the walkthrough again</button>
+        </form>
+      </div>
+    </section>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
   </body></html>;
 }
