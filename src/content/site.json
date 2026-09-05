@@ -12,7 +12,7 @@
   "primaryAction": {
     "label": "Read the runtime",
     "kind": "url",
-    "target": "https://github.com/wisent-ai/singularity"
+    "target": "/visit/runtime"
   },
   "secondaryAction": {
     "label": "Open the source",
