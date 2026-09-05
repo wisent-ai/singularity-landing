@@ -26,7 +26,7 @@ The command requires these options, or their named environment-variable equivale
 ## Runtime options
 
 - Persona: \`--agent-name MyAgent\`, \`--agent-ticker AGENT\`, \`--agent-type general\`, and \`--specialty general\`.
-- State and loop: \`--stimulus <text>\`, \`--starting-balance 10\`, \`--instance-price 0\`, \`--cycle-interval-secs 5\`, \`--max-tool-rounds 8\`, \`--state-dir .singularity\`, \`--workspace .\`, and \`--resume\`.
+- State and loop: \`--stimulus <text>\`, optional \`--import-file <singularity-mind-import-v1.json>\`, \`--starting-balance 10\`, \`--instance-price 0\`, \`--cycle-interval-secs 5\`, \`--max-tool-rounds 8\`, \`--state-dir .singularity\`, \`--workspace .\`, and \`--resume\`. On \`run\` and \`once\`, the complete import is validated before a new state is created and persisted before the first model call.
 - Brama: \`--brama-url http://127.0.0.1:8081\`, \`--brama-model any\`, \`--max-tokens 2048\`, \`--temperature 0.2\`, \`--input-price 0\`, and \`--output-price 0\`.
 - Las: \`--las-command node\`, \`--las-entrypoint ../las/src/mcp.mjs\`, \`--las-only <csv>\`, \`--las-skip <csv>\`, and \`--required-surfaces skarbiec,finance\`.
 - Most and deadlines: \`--most-url http://127.0.0.1:8080\`, optional \`--most-token-file <owner-only-file>\`, \`--http-timeout-secs 120\`, \`--mcp-timeout-secs 120\`, and \`--shutdown-grace-secs 10\`.
@@ -201,5 +201,73 @@ JSON format prints the full pretty-printed tool definitions, including each func
 - Clap refuses missing release-pinning paths or any \`--format\` value other than \`json\` or \`table\` before runtime code executes.
 
 All MCP refusals exit 3; configuration and clap refusals exit 2; JSON serialization failures exit 5.`,
+  },
+  {
+    slug: "cli/import",
+    title: "singularity import",
+    summary: "Atomically import attributed memory, knowledge, and profile records into an existing being.",
+    section: "CLI commands",
+    source: `# \`singularity import\`
+
+Import an owner-provided mind document through Singularity's canonical state operation. The operation adds durable memories and provenance; it cannot replace identity or enable a financial tool.
+
+## Invocation
+
+\`\`\`bash
+singularity import \\
+  --file /path/to/mind.json \\
+  --state-dir /path/to/being-state
+\`\`\`
+
+For a brand-new being, add \`--import-file /path/to/mind.json\` to the fully configured \`singularity run\` or \`singularity once\` command. The runtime validates the document before creating state and persists accepted records before its first model call.
+
+\`--state-dir\` also reads \`SINGULARITY_STATE_DIR\` and defaults to \`.singularity\`. The being must already exist. If \`singularity run\` owns that state, the command submits the document to its owner-only local service. Otherwise it uses the same import operation with the stopped being's \`ActivityStore\`.
+
+## Accepted document
+
+\`\`\`json
+{
+  "schema_version": "singularity-mind-import-v1",
+  "source": { "kind": "<export type>", "id": "<stable source id>" },
+  "memories": [{ "id": "<stable item id>", "text": "<existing memory>" }],
+  "knowledge": [{ "id": "<stable item id>", "text": "<existing knowledge>" }],
+  "profile": [{ "id": "<stable item id>", "text": "<existing profile fact>" }]
+}
+\`\`\`
+
+The arrays are optional, but the document must contain at least one real item. \`source.kind\`, \`source.id\`, and every item \`id\` are trimmed identifiers of at most 256 bytes without control characters. Item IDs are unique across all three arrays. Text is trimmed, nonempty, NUL-free, and at most 65,536 bytes. The file must be a regular non-symbolic-link JSON file no larger than 16 MiB, with no unknown fields and at most 1,000 total items.
+
+## Duplicates and retained state
+
+Singularity validates every record before mutation and then writes \`state.json\` once. A repeated source plus item ID with identical category and text is \`unchanged\`. The same text already retained from a different source gains that source attribution and is \`attributed\` rather than duplicated. A repeated source item with different category or text conflicts and refuses the complete document, leaving the original state unchanged.
+
+Memory, knowledge, and profile values are retained in \`mind.memories\` under their respective kind, with \`kind\`, \`source_id\`, and \`item_id\` provenance. A profile item is a remembered fact, not an identity update. The operation never changes \`identity\`, \`system_prompt\`, rules, learnings, current model, budget, finance policy, or available tools, and it does not run a cycle.
+
+## Result and refusals
+
+Success prints pretty JSON with \`accepted\`, \`source_kind\`, \`source_id\`, \`imported\`, \`attributed\`, \`unchanged\`, \`conflicting\`, \`rejected\`, and item \`issues\`. An accepted import appends one \`mind_imported\` activity event. A conflict prints the same refused report, returns a state error, and saves nothing.
+
+Malformed or unsupported input, a missing being, an unavailable active state owner, a live-looking state without its local service, an oversized request, and state I/O failure are refused on stderr. Validation and conflicts never partially import records.`,
+  },
+  {
+    slug: "cli/onboarding",
+    title: "singularity onboarding",
+    summary: "Show or replay first use, optionally importing an existing mind before the walkthrough.",
+    section: "CLI commands",
+    source: `# \`singularity onboarding\`
+
+Show Singularity's first-use journey without inventing starter memories or marking a model cycle complete.
+
+## Invocation
+
+\`\`\`bash
+singularity onboarding [--reset] \\
+  [--import-file /path/to/mind.json] \\
+  [--state-dir /path/to/being-state]
+\`\`\`
+
+\`--reset\` discards recorded walkthrough progress and evidence before opening the first screen. \`--import-file\` invokes the exact [\`singularity import\`](import) state operation before presentation; \`--state-dir\` selects its destination and otherwise follows \`SINGULARITY_STATE_DIR\` or \`.singularity\`.
+
+The import is optional. Skipping it leaves the existing or empty mind usable. When supplied, the entire document must be accepted and persisted before the walkthrough starts; the command prints the import report and stops immediately on any conflict or rejection. Import success does not complete onboarding. The journey's first-success fact remains \`autonomous_cycle_completed\`, recorded only after a real \`singularity once\` cycle completes.`,
   },
 ] as const;
