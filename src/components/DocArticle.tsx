@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
 
+const CODE_MARK = "`";
+const STRONG_MARK = "**";
+
 function inline(value: string): ReactNode[] {
   return value.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, index) => {
-    if (part.startsWith("`") && part.endsWith("`")) return <code key={index}>{part.slice(1, -1)}</code>;
-    if (part.startsWith("**") && part.endsWith("**")) return <strong key={index}>{part.slice(2, -2)}</strong>;
+    if (part.startsWith(CODE_MARK) && part.endsWith(CODE_MARK)) return <code key={index}>{part.slice(CODE_MARK.length, -CODE_MARK.length)}</code>;
+    if (part.startsWith(STRONG_MARK) && part.endsWith(STRONG_MARK)) return <strong key={index}>{part.slice(STRONG_MARK.length, -STRONG_MARK.length)}</strong>;
     return part;
   });
 }

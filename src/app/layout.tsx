@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { EchoAnalytics } from "@/components/echo-analytics";
 import { LandingFooter, LandingHeader } from "@/components/landing-components.js";
 import componentPlan from "@/content/components.json";
 import plan from "@/content/plan.json";
@@ -7,9 +8,11 @@ import site from "@/content/site.json";
 import "./globals.css";
 
 const chosen = (id: string) => componentPlan.components.some((entry) => entry.id === id && entry.status !== "excluded");
+// A result page shows about this many characters of a title before cutting it.
+const TITLE_LENGTH_LIMIT = 65;
 const headline = plan.hero.headline;
 const prefixed = site.product + " — " + headline;
-const pageTitle = headline.toLowerCase().includes(site.product.toLowerCase()) ? headline : prefixed.length <= 65 ? prefixed : headline;
+const pageTitle = headline.toLowerCase().includes(site.product.toLowerCase()) ? headline : prefixed.length <= TITLE_LENGTH_LIMIT ? prefixed : headline;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.domain),
@@ -45,6 +48,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </form>
       </div>
     </section>
+    <EchoAnalytics />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
   </body></html>;
 }
