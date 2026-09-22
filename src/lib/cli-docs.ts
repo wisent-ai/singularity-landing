@@ -22,6 +22,7 @@ The command requires these options, or their named environment-variable equivale
 - \`--policy-sequence <integer>\`.
 - \`--las-release-manifest\`, \`--las-release-manifest-signature\`, and \`--las-release-trust-store\`. Each must name an absolute regular file. \`--las-release-watermark\` must be absolute.
 - Brama signing material: either \`--brama-secret-file <owner-only-file>\` / \`BRAMA_HMAC_SECRET_FILE\`, or \`WISENT_APP_AGENT_AUTH_SECRET\` when no file is supplied.
+- Brama caller authorization: \`--brama-bearer-file <owner-only-file>\` / \`BRAMA_BEARER_TOKEN_FILE\` is required separately. An HMAC identity signature does not replace the bearer.
 
 ## Runtime options
 
@@ -29,7 +30,9 @@ The command requires these options, or their named environment-variable equivale
 - State and loop: \`--stimulus <text>\`, optional \`--import-file <singularity-mind-import-v1.json>\`, \`--starting-balance 10\`, \`--instance-price 0\`, \`--cycle-interval-secs 5\`, \`--max-tool-rounds 8\`, \`--state-dir .singularity\`, \`--workspace .\`, and \`--resume\`. On \`run\` and \`once\`, the complete import is validated before a new state is created and persisted before the first model call.
 - Brama: \`--brama-url http://127.0.0.1:8081\`, \`--brama-model any\`, \`--max-tokens 2048\`, \`--temperature 0.2\`, \`--input-price 0\`, and \`--output-price 0\`.
 - Las: \`--las-command node\`, \`--las-entrypoint ../las/src/mcp.mjs\`, \`--las-only <csv>\`, \`--las-skip <csv>\`, and \`--required-surfaces skarbiec,finance\`.
-- Most and deadlines: \`--most-url http://127.0.0.1:8080\`, optional \`--most-token-file <owner-only-file>\`, \`--http-timeout-secs 120\`, \`--mcp-timeout-secs 120\`, and \`--shutdown-grace-secs 10\`.
+- Most and transport: \`--most-url http://127.0.0.1:8080\`, optional \`--most-token-file <owner-only-file>\`, \`--http-timeout-secs 120\`, and \`--shutdown-grace-secs 10\`. MCP calls wait for completion or explicit cancellation; the removed \`--mcp-timeout-secs\` option is no longer accepted.
+
+Managed bootstrap and Las children retain an absolute \`HOME\` owned by the current Unix principal and not writable by another principal. Their executable search starts with \`$HOME/.local/bin\` and \`$HOME/.stado/bin\`, followed by the fixed operating-system and package-manager directories. A missing or unsafe home is refused, not replaced with another account's home. Ecosystem execution passes its configured Brama bearer, signing secret and agent identity into Jeden explicitly, with request state isolated under the ecosystem owner's directory.
 
 Every flag above also has the environment-variable spelling exposed by \`singularity <command> --help\`.`;
 
