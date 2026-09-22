@@ -1,5 +1,11 @@
 import type { DocPage } from "./docs";
 
+const controlInputs = `## Shared control options
+
+\`--state-dir PATH\` selects the live owner; its environment equivalent is \`SINGULARITY_STATE_DIR\`, and its default is \`.singularity\`. Relative paths resolve from the client's working directory. \`--json\` prints the complete version-two response envelope.
+
+The owner and client must have the same Unix identity. An unavailable socket is a refusal, not permission to read cached state. Owner and transport refusals name the operation and return a nonzero exit status. Malformed command arguments are rejected by the CLI parser before a request is sent. See [the ecosystem contract](/docs/ecosystem) for current release availability and wire limits.`;
+
 export const ecosystemPages: readonly DocPage[] = [{
   slug: "ecosystem",
   title: "Autonomous ecosystem",
@@ -113,4 +119,146 @@ The journey creates its own paused owner under \`.wisent-output/ecosystem-tests/
 
 The report retains the candidate commit, executable digest, working directory, argv, exit codes or signals, owner output, CLI responses and persisted-state observations. Completed reports are copied into \`WISENT_TEST_EVIDENCE_DIR\` when the fleet supplies it. This source includes the journey but has not established a passing real-owner run or visual Desktop qualification.
 `,
+}, {
+  slug: "cli/ecosystem",
+  title: "singularity ecosystem",
+  summary: "Select a durable portfolio owner or one of its control operations.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem\`
+
+Run \`singularity ecosystem --help\` to list the group. A subcommand is required; this group does not start an owner implicitly.
+
+Use [run](/docs/cli/ecosystem/run) to own the portfolio. Read it with [status](/docs/cli/ecosystem/status), [opportunities](/docs/cli/ecosystem/opportunities), [initiatives](/docs/cli/ecosystem/initiatives), [records](/docs/cli/ecosystem/records), [record](/docs/cli/ecosystem/record) or [explain](/docs/cli/ecosystem/explain). [Pause](/docs/cli/ecosystem/pause) and [resume](/docs/cli/ecosystem/resume) control admission without changing delegation.
+
+These are source contracts awaiting the qualification described in [Autonomous ecosystem](/docs/ecosystem).`,
+}, {
+  slug: "cli/ecosystem/run",
+  title: "singularity ecosystem run",
+  summary: "Own persistent portfolio state under one fixed delegated policy.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem run\`
+
+## Invocation
+
+\`singularity ecosystem run --policy /absolute/policy.json --state-dir state --start-paused --ready-json\`
+
+Supply the normal identity, Brama authorization and signing material, and signed Las inputs documented under [required runtime inputs](/docs/cli/run). The example does not supply or replace those credentials. The policy's SHA-256 must match the delegated policy digest. [Policy fields and validation](/docs/ecosystem) define portfolio budgets and authority; the older being's starting balance does not allocate portfolio funds.
+
+## State and output
+
+The process owns SQLite state and its Unix control socket. Existing portfolio state reopens under the same owner and policy; it does not require the older being's \`--resume\` flag. \`--start-paused\` persists a pause before the socket opens, including on reopening. Without it, the recorded pause remains unchanged.
+
+\`--ready-json\` emits the flushed \`ecosystem_control_ready\` event after recovery and binding. It reports the schema, socket, pause and embedded source revision. It does not attest Las admission, model access, delivery or installation. The process remains running after this event.
+
+Missing configuration, invalid policy, changed owner, policy rollback, another state owner or an unbindable socket refuses startup. Dependency failures remain observable through control; a listening socket is not proof that those dependencies work.`,
+}, {
+  slug: "cli/ecosystem/status",
+  title: "singularity ecosystem status",
+  summary: "Read the live owner, allocations, admission and operation failures.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem status\`
+
+\`singularity ecosystem status --state-dir state --json\`
+
+The result reports the persisted owner, pause, runtime version and source revision, signed Las catalog readiness, portfolio counts, allocations and operation failures. A missing compiled source revision is null, not an inferred release. Catalog readiness does not establish successful execution. This command does not change admission or delegation.
+
+${controlInputs}`,
+}, {
+  slug: "cli/ecosystem/opportunities",
+  title: "singularity ecosystem opportunities",
+  summary: "Read one bounded page of retained opportunity records.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem opportunities\`
+
+\`singularity ecosystem opportunities --state-dir state --limit 50 --json\`
+
+The result contains \`items\` and \`next_cursor\`. Return a non-null cursor with \`--before CURSOR\` to read older inserts. Omit it to restart at the newest inserts. \`--limit\` defaults to 50 and must be between 1 and 100.
+
+This is a live listing, not a frozen snapshot. A record too large for one bounded collection response must be read with [record](/docs/cli/ecosystem/record). Reading an opportunity neither accepts it nor allocates an initiative.
+
+${controlInputs}`,
+}, {
+  slug: "cli/ecosystem/initiatives",
+  title: "singularity ecosystem initiatives",
+  summary: "Read one bounded page of admitted initiative records.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem initiatives\`
+
+\`singularity ecosystem initiatives --state-dir state --limit 50 --json\`
+
+The result contains \`items\` and \`next_cursor\`, newest insert first. Use \`--before CURSOR\` for older inserts; omit it for a fresh listing. \`--limit\` defaults to 50 and accepts 1 through 100. Records can change between reads.
+
+An oversized collection entry requires [record](/docs/cli/ecosystem/record). Use [explain](/docs/cli/ecosystem/explain) for the current proposal, independent review and retained-history parameters. Listing does not start or repeat execution.
+
+${controlInputs}`,
+}, {
+  slug: "cli/ecosystem/records",
+  title: "singularity ecosystem records",
+  summary: "Find retained evidence without copying complete bodies into a listing.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem records\`
+
+\`singularity ecosystem records event --state-dir state --initiative-id INITIATIVE_ID --limit 50 --json\`
+
+KIND and \`--initiative-id\` are optional. Omit KIND for all types; an unknown kind returns an empty collection. A row carries its identity, timestamps, byte length and shortened preview. Read its body with [record](/docs/cli/ecosystem/record).
+
+\`--limit\` accepts 1 through 100 and defaults to 50. Return \`next_cursor\` as \`--before\` with the same filters. Pages follow descending insertion order and are not snapshots; restarting without a cursor includes newer inserts.
+
+${controlInputs}`,
+}, {
+  slug: "cli/ecosystem/record",
+  title: "singularity ecosystem record",
+  summary: "Read retained JSON in bounded, revision-bound UTF-8 fragments.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem record\`
+
+\`singularity ecosystem record event RECORD_ID --state-dir state --offset 0 --bytes 65536 --json\`
+
+KIND and ID are required. \`--offset\` defaults to zero; \`--bytes\` defaults to 65536 and accepts 4 through 262144. The result includes \`kind\`, \`id\`, \`offset\`, \`total_bytes\`, \`content_sha256\`, \`text\` and \`next_offset\`.
+
+For a continuation, pass the returned \`next_offset\` as \`--offset\` and the original digest as \`--revision SHA256\`. Concatenate decoded \`text\` values, not response envelopes. The owner ends each fragment at a UTF-8 boundary.
+
+A nonzero offset without a revision, a changed revision, an absent record, an offset past the end or inside a UTF-8 character, and an invalid byte limit are refusals. A changed record is not silently substituted. Explicitly restart at offset zero without a revision to read its current content.
+
+${controlInputs}`,
+}, {
+  slug: "cli/ecosystem/explain",
+  title: "singularity ecosystem explain",
+  summary: "Read an initiative's current decision and bounded history references.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem explain\`
+
+\`singularity ecosystem explain INITIATIVE_ID --state-dir state --json\`
+
+The required ID selects an initiative. The result contains its current record, opportunity and independent review, related-record counts and parameters for reading retained history. An unknown initiative is refused. The response does not assemble an unbounded execution trail; use [records](/docs/cli/ecosystem/records) with the returned initiative filter.
+
+${controlInputs}`,
+}, {
+  slug: "cli/ecosystem/pause",
+  title: "singularity ecosystem pause",
+  summary: "Persist an admission pause without cancelling dispatched operations.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem pause\`
+
+\`singularity ecosystem pause --state-dir state --json\`
+
+The owner persists the pause before acknowledging it. Repeating the command leaves admission paused. New selection and dispatch stop; observations and reconciliation of already-dispatched operations continue. The pause survives owner interruption and reopening.
+
+An interrupted client exchange does not undo an accepted pause. Read [status](/docs/cli/ecosystem/status) to establish the actual state. Pause is not cancellation or revocation of a remote operation.
+
+${controlInputs}`,
+}, {
+  slug: "cli/ecosystem/resume",
+  title: "singularity ecosystem resume",
+  summary: "Reopen admission under the existing authority and remaining allocation.",
+  section: "CLI commands",
+  source: `# \`singularity ecosystem resume\`
+
+\`singularity ecosystem resume --state-dir state --json\`
+
+The owner persists an open admission state. It does not increase the budget, grant capabilities, clear an indeterminate external effect or make an unavailable dependency healthy. Selection and dispatch still require their normal policy, allocation and readiness checks.
+
+An interrupted client exchange can leave the result unknown; read [status](/docs/cli/ecosystem/status) rather than assuming the change was undone.
+
+${controlInputs}`,
 }];
