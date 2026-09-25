@@ -16,7 +16,7 @@ export const ecosystemPages: readonly DocPage[] = [{
 
 The ecosystem runtime keeps a portfolio across process restarts. It collects observations even when no defect was reported. A separate model call reviews each proposed opportunity before an initiative exists. A release opens outcome measurement; it is not evidence of adoption or revenue.
 
-Singularity owns direction and allocations. Jeden adapts Pursuit's contract, execution and independent acceptance protocol. Wisent Products owns product identity and installation. Stado owns release qualification and delivery. Echo owns audience, usage and market data. Provider credentials stay with their owners.
+Singularity owns direction and allocations. Jeden adapts Pursuit's contract, execution and independent acceptance protocol. Stado owns product identity and installation through its product catalog, and release qualification and delivery. Echo owns audience, usage and market data. Provider credentials stay with their owners.
 
 **Availability:** The owner commands and Desktop changes described here are source changes awaiting native release and real-owner qualification. End-to-end product delivery and the 72-hour unattended qualification are not established by this page or a source commit.
 
@@ -50,7 +50,7 @@ A continuation without its revision is refused. A revision mismatch reports the 
 
 The owner upgrades schema-one SQLite state to schema two in the same transaction as its validated startup changes. Old events become \`event\` records with identities \`event-<old event number>\`; their original detail and timestamps remain. New events additionally name the changed record and its content digest. Older records acquire their digest on their first fragment read. Missing schema metadata on nonempty state is refused rather than treated as permission to adopt another history.
 
-Control wire version two does not change the delegated policy, Jeden request or Wisent Products creation schemas; those contracts remain version one.
+Control wire version two does not change the delegated policy, Jeden request or \`stado product create\` schemas; those contracts remain version one.
 
 ## Fixed delegated policy
 
@@ -91,7 +91,7 @@ Observation readers run independently. An unavailable source records its command
 
 Jeden receives an immutable request ID and repository scope. Repeating submission reads or continues that request rather than creating another task. Its accepted result must contain a canonical Pursuit contract, verdict and success receipt, plus reviewed source revisions. Changed or unpushed source is not accepted for release. An interrupted mutable tool call without a complete result remains indeterminate and is not blindly replayed.
 
-A new product is provisioned through \`wisent-products create\`. Private repositories and a preview catalog record are not an implemented product. The executor still owes real functionality, canonical documentation, actual tests, installation recipes, commits and push. A missing recipe or first-use result remains a gap.
+A new product is provisioned through \`stado product create\`. Private repositories and a preview catalog record are not an implemented product. The executor still owes real functionality, canonical documentation, actual tests, installation recipes, commits and push. A missing recipe or first-use result remains a gap.
 
 Release reconciliation retains the exact product, version, source commit and Stado run. If submission returned no identity, the runtime requires an unambiguous matching recorded run before proceeding. Installation read-back must report the exact accepted revision and readiness. An installation receipt does not prove customer impact.
 
