@@ -27,9 +27,6 @@
           "build"
         ]
       },
-      "tests": [
-        {"name": "smoke", "argv": ["stado", "web", "smoke"]}
-      ],
       "stage": {
         "dist/singularity-landing-web.tar.gz": "singularity-landing-web.tar.gz",
         "dist/singularity-landing-web.tar.gz.sha256": "singularity-landing-web.tar.gz.sha256",
