@@ -34,7 +34,7 @@ The command requires these options, or their named environment-variable equivale
 
 Managed bootstrap and Las children retain an absolute \`HOME\` owned by the current Unix principal and not writable by another principal. Their executable search starts with \`$HOME/.local/bin\` and \`$HOME/.stado/bin\`, followed by the fixed operating-system and package-manager directories. A missing or unsafe home is refused, not replaced with another account's home. Ecosystem execution passes its configured Brama bearer, signing secret and agent identity into Jeden explicitly, with request state isolated under the ecosystem owner's directory.
 
-Every flag above also has the environment-variable spelling exposed by \`singularity <command> --help\`.`;
+Every flag above also has the environment-variable spelling exposed by \`singularity <command> --help\`. The global \`--text\`, anywhere on the line, prints every report \`once\`, \`import\`, \`onboarding --import-file\` and \`doctor\` produce as indented \`key: value\` lines instead of JSON, from the same data.`;
 
 const commonRuntimeRefusals = `## Configuration refusals
 
