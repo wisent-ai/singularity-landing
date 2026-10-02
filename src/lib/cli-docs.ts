@@ -26,10 +26,10 @@ The command requires these options, or their named environment-variable equivale
 
 ## Runtime options
 
-- Persona: \`--agent-name MyAgent\`, \`--agent-ticker AGENT\`, \`--agent-type general\`, and \`--specialty general\`.
+- Persona: required \`--agent-name <name>\` and \`--agent-ticker <ticker>\` (\`SINGULARITY_AGENT_NAME\`, \`SINGULARITY_AGENT_TICKER\`; no persona is assumed), \`--agent-type general\`, and \`--specialty general\`.
 - State and loop: \`--stimulus <text>\`, optional \`--import-file <singularity-mind-import-v1.json>\`, \`--starting-balance 10\`, \`--instance-price 0\`, \`--cycle-interval-secs 5\`, \`--max-tool-rounds 8\`, \`--state-dir .singularity\`, \`--workspace .\`, and \`--resume\`. On \`run\` and \`once\`, the complete import is validated before a new state is created and persisted before the first model call.
-- Brama: required \`--brama-url <url>\` (\`BRAMA_BASE_URL\`; no address is assumed and a missing one exits 2), \`--brama-model any\`, \`--max-tokens 2048\`, \`--temperature 0.2\`, \`--input-price 0\`, and \`--output-price 0\`.
-- Las: \`--las-command node\`, \`--las-entrypoint ../las/src/mcp.mjs\`, \`--las-only <csv>\`, \`--las-skip <csv>\`, and \`--required-surfaces skarbiec,finance\`.
+- Brama: required \`--brama-url <url>\` (\`BRAMA_BASE_URL\`; no address is assumed and a missing one exits 2), required \`--brama-model <model|any|any-vision-capable|task:name>\` (\`BRAMA_MODEL\`; no model is assumed), \`--max-tokens 2048\`, \`--temperature 0.2\`, \`--input-price 0\`, and \`--output-price 0\`.
+- Las: required \`--las-command <program>\`, \`--las-entrypoint <file>\` and \`--las-only <csv>\` (\`LAS_COMMAND\`, \`LAS_MCP_ENTRYPOINT\`, \`LAS_ONLY\`; no program, checkout location or surface set is assumed, and an empty \`--las-only\` serves every surface Las offers), \`--las-skip <csv>\`, and \`--required-surfaces skarbiec,finance\`.
 - Most and transport: \`--most-url <url>\` (\`MOST_BASE_URL\`), required whenever a Most credential is configured through optional \`--most-token-file <owner-only-file>\` or the bootstrap handoff, and otherwise refused as \`a Most credential is configured but MOST_BASE_URL (--most-url) is not\`; \`--http-timeout-secs 120\`, and \`--shutdown-grace-secs 10\`. A spawned child being receives the parent's Brama and Most addresses. MCP calls wait for completion or explicit cancellation; the removed \`--mcp-timeout-secs\` option is no longer accepted.
 
 Managed bootstrap and Las children retain an absolute \`HOME\` owned by the current Unix principal and not writable by another principal. Their executable search starts with \`$HOME/.local/bin\` and \`$HOME/.stado/bin\`, followed by the fixed operating-system and package-manager directories. A missing or unsafe home is refused, not replaced with another account's home. Ecosystem execution passes its configured Brama bearer, signing secret and agent identity into Jeden explicitly, with request state isolated under the ecosystem owner's directory.
@@ -186,8 +186,8 @@ singularity tools \\
 ## Required inputs and options
 
 - The four Las release-pinning paths are required by clap. They are passed to Las as \`LAS_RELEASE_MANIFEST_FILE\`, \`LAS_RELEASE_MANIFEST_SIGNATURE_FILE\`, \`LAS_RELEASE_TRUST_STORE_FILE\`, and \`LAS_RELEASE_WATERMARK_FILE\`.
-- \`--agent-id\` / \`SINGULARITY_AGENT_ID\` is optional only when Skarbiec is not active. The default \`--las-only\` selection includes \`skarbiec\`, so the default surface set requires an explicit immutable identity.
-- \`--las-command node\`, \`--las-entrypoint ../las/src/mcp.mjs\`, \`--las-only <csv>\`, and optional \`--las-skip <csv>\` select the spawned Las process and surfaces.
+- \`--agent-id\` / \`SINGULARITY_AGENT_ID\` is optional only when Skarbiec is not active: a \`--las-only\` selection that includes \`skarbiec\` requires an explicit immutable identity.
+- Required \`--las-command <program>\`, \`--las-entrypoint <file>\` and \`--las-only <csv>\` (an empty value serves every surface), and optional \`--las-skip <csv>\` select the spawned Las process and surfaces; nothing is assumed.
 - \`--format json\` is the default; \`--format table\` selects the compact form. The MCP request and shutdown deadline is fixed at 120 seconds. This command enforces no required-surface list.
 
 ## Output and state effect
