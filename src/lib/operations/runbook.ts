@@ -19,7 +19,7 @@ Check [Configuration](configuration) for identity and release-pinning inputs and
 | \`configuration: workspace: <io-error>\` / \`workspace must be a directory\` | The workspace does not resolve to an existing directory. |
 | \`configuration: max tool rounds must be positive\` | The configured round limit is zero. |
 | \`configuration: prices and balance cannot be negative\` | A configured decimal is negative. |
-| \`configuration: temperature must be finite and between zero and two\` | The temperature is outside its accepted range. |
+| \`configuration: temperature must be finite and not negative\` | A stated temperature is negative or not a number. Its upper end is the provider's, which refuses a value outside its range itself. |
 | \`configuration: LAS entrypoint not found: <path>\` | The configured entrypoint is not an existing file. |
 | \`configuration: LAS release manifest must be an absolute regular file\` | The manifest, signature or trust-store file is invalid. The watermark must also be absolute. |
 | \`configuration: BRAMA_BASE_URL must use http or https\` | The gateway URL uses an unsupported scheme; the same rule applies to Most. |
