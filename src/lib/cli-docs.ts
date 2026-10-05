@@ -27,8 +27,8 @@ The command requires these options, or their named environment-variable equivale
 ## Runtime options
 
 - Persona: required \`--agent-name <name>\` and \`--agent-ticker <ticker>\` (\`SINGULARITY_AGENT_NAME\`, \`SINGULARITY_AGENT_TICKER\`; no persona is assumed), \`--agent-type general\`, and \`--specialty general\`.
-- State and loop: \`--stimulus <text>\`, optional \`--import-file <singularity-mind-import-v1.json>\`, \`--starting-balance 10\`, \`--instance-price 0\`, \`--cycle-interval-secs 5\`, \`--max-tool-rounds 8\`, required \`--state-dir <dir>\` and \`--workspace <dir>\` (\`SINGULARITY_STATE_DIR\`, \`SINGULARITY_WORKSPACE\`; no directory is assumed), and \`--resume\`. On \`run\` and \`once\`, the complete import is validated before a new state is created and persisted before the first model call.
-- Brama: required \`--brama-url <url>\` (\`BRAMA_BASE_URL\`; no address is assumed and a missing one exits 2), required \`--brama-model <model|any|any-vision-capable|task:name>\` (\`BRAMA_MODEL\`; no model is assumed), optional \`--max-tokens <n>\` (\`BRAMA_MAX_TOKENS\`; omitted, the model's own output limit from Brama's catalog applies and cost admission quotes against it), optional \`--temperature <t>\` (\`BRAMA_TEMPERATURE\`; omitted, none is sent and the provider's default applies), \`--input-price 0\`, and \`--output-price 0\`.
+- State and loop: \`--stimulus <text>\`, optional \`--import-file <singularity-mind-import-v1.json>\`, \`--starting-balance 10\`, \`--instance-price 0\`, \`--cycle-interval-secs 5\`, required \`--state-dir <dir>\` and \`--workspace <dir>\` (\`SINGULARITY_STATE_DIR\`, \`SINGULARITY_WORKSPACE\`; no directory is assumed), and \`--resume\`. A cycle runs until the model answers without calling a tool; there is no round limit, and every round is charged at Brama's catalog price for the model that served it. On \`run\` and \`once\`, the complete import is validated before a new state is created and persisted before the first model call.
+- Brama: required \`--brama-url <url>\` (\`BRAMA_BASE_URL\`; no address is assumed and a missing one exits 2), required \`--brama-model <model|any|any-vision-capable|task:name>\` (\`BRAMA_MODEL\`; no model is assumed), optional \`--max-tokens <n>\` (\`BRAMA_MAX_TOKENS\`; omitted, the model's own output limit from Brama's catalog applies and cost admission quotes against it), and optional \`--temperature <t>\` (\`BRAMA_TEMPERATURE\`; omitted, none is sent and the provider's default applies). Token prices are not configured: each round is charged at the catalog price of the model that served it.
 - Las: required \`--las-command <program>\`, \`--las-entrypoint <file>\` and \`--las-only <csv>\` (\`LAS_COMMAND\`, \`LAS_MCP_ENTRYPOINT\`, \`LAS_ONLY\`; no program, checkout location or surface set is assumed, and an empty \`--las-only\` serves every surface Las offers), \`--las-skip <csv>\`, and \`--required-surfaces skarbiec,finance\`.
 - Most and transport: \`--most-url <url>\` (\`MOST_BASE_URL\`), required whenever a Most credential is configured through optional \`--most-token-file <owner-only-file>\` or the bootstrap handoff, and otherwise refused as \`a Most credential is configured but MOST_BASE_URL (--most-url) is not\`; \`--http-timeout-secs 120\`, and \`--shutdown-grace-secs 10\`. A spawned child being receives the parent's Brama and Most addresses. MCP calls wait for completion or explicit cancellation; the removed \`--mcp-timeout-secs\` option is no longer accepted.
 
@@ -42,7 +42,6 @@ Before contacting a surface or writing being state, the runtime refuses with the
 
 - stimulus exceeds 65536 bytes or contains NUL: \`configuration: stimulus must be at most 65536 bytes and contain no NUL\`;
 - the workspace cannot be resolved or is not a directory: \`configuration: workspace: <error>\` or \`configuration: workspace must be a directory\`;
-- \`--max-tool-rounds\` is zero: \`configuration: max tool rounds must be positive\`;
 - a starting balance or price is negative: \`configuration: prices and balance cannot be negative\`;
 - a stated temperature is not finite or is negative: \`configuration: temperature must be finite and not negative\` (the upper end is the provider's, which refuses a value outside its range with its own message);
 - the Las entrypoint is not a file: \`configuration: LAS entrypoint not found: <path>\`;
@@ -122,7 +121,7 @@ ${runtimeInputs}
 
 ## Output and state effect
 
-After a successful cycle and successful Las shutdown, stdout receives pretty JSON with \`cycle\`, \`status\`, \`final_content\`, \`balance_usd\`, \`earned_usd\`, \`net_profit_usd\`, \`total_tokens\`, and ordered \`actions\`. Status is \`completed\`, \`tool_round_limit\`, or \`budget_exhausted\`.
+After a successful cycle and successful Las shutdown, stdout receives pretty JSON with \`cycle\`, \`status\`, \`final_content\`, \`balance_usd\`, \`earned_usd\`, \`net_profit_usd\`, \`total_tokens\`, and ordered \`actions\`. Status is \`completed\` or \`budget_exhausted\`.
 
 The cycle counter, conversation, mind, budget, and activity journal are persisted exactly as they are under \`run\`. If the cycle or shutdown fails, no report is printed; the classed error is printed to stderr by the binary.
 

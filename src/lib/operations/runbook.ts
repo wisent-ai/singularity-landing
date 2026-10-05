@@ -17,7 +17,6 @@ Check [Configuration](configuration) for identity and release-pinning inputs and
 | \`configuration: <label> must be 64 lowercase hexadecimal characters\` | A key or digest has the wrong encoding. |
 | \`configuration: stimulus must be at most 65536 bytes and contain no NUL\` | The observation exceeds its input bound. |
 | \`configuration: workspace: <io-error>\` / \`workspace must be a directory\` | The workspace does not resolve to an existing directory. |
-| \`configuration: max tool rounds must be positive\` | The configured round limit is zero. |
 | \`configuration: prices and balance cannot be negative\` | A configured decimal is negative. |
 | \`configuration: temperature must be finite and not negative\` | A stated temperature is negative or not a number. Its upper end is the provider's, which refuses a value outside its range itself. |
 | \`configuration: LAS entrypoint not found: <path>\` | The configured entrypoint is not an existing file. |
@@ -45,7 +44,7 @@ Do not invent an identity, copy another workload's credential or substitute a du
 
 Permanent Brama failures include HTTP 4xx, contradictory completions and rejected signatures. Transient failures include connection errors and HTTP 429/5xx. The runtime journals tolerated failures rather than reporting successful actions. \`once\` returns its first failure; existing state and journal entries still matter.
 
-An indeterminate tool outcome means dispatch may have happened without a reliable response. It must not be automatically replayed as though nothing occurred. \`maximum tool rounds reached\` means a cycle stopped at its configured round bound, not that its objective succeeded.
+An indeterminate tool outcome means dispatch may have happened without a reliable response. It must not be automatically replayed as though nothing occurred. \`model <id> is absent from the caller-scoped catalog; its price is unknown\` means the model that answered has no catalog price, so the round could not be charged and the cycle stopped instead of counting it as free.
 
 | State refusal | Interpretation |
 |---|---|
