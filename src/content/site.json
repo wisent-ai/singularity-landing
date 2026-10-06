@@ -78,5 +78,10 @@
       "label": "License (MIT)",
       "href": "https://github.com/wisent-ai/singularity/blob/main/LICENSE"
     }
-  ]
+  ],
+  "analytics": {
+    "siteId": "singularity.wisent.com",
+    "siteName": "Singularity",
+    "collectorUrl": "https://content.wisent.ai/api/analytics/web/collect"
+  }
 }
