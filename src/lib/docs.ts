@@ -36,7 +36,7 @@ The corresponding variables are \`SINGULARITY_BOOTSTRAP_MANIFEST\`, \`SINGULARIT
 The signature covers the exact manifest bytes after the byte prefix \`SINGULARITY-BOOTSTRAP-MANIFEST\\0v2\\0\`. The trust root is an Ed25519 public key. The manifest must satisfy these checks:
 
 - \`version\` is \`singularity.bootstrap.v2\`.
-- It is not expired, is issued at most 30 seconds in the future and has a total lifetime of at most 300 seconds.
+- It is not expired, and it expires after it was issued. How long it lives is the issuer's signed \`expires_at\`; the consumer sets no ceiling of its own.
 - The workload public key, executable, code and policy digests, and all three capability IDs are 64 lowercase hexadecimal characters.
 - Agent, role, environment, host and workload identities are nonempty, trimmed, NUL-free and bounded. The policy sequence is positive.
 - Broker socket, workload private key and executable paths are absolute.
@@ -53,9 +53,9 @@ The supervising deployment must issue the additional workload-bound Brama author
 
 ## Redemption and cleanup
 
-For each capability, bootstrap generates a fresh nonce and signs the capability ID, nonce and workload ID under \`SKARBIEC-WORKLOAD-PROOF\\0v1\\0\`. It sends a \`skarbiec.redeem.v1\` request to the broker's Unix socket. Only an \`ok\` control response with a bounded, complete secret is accepted.
+For each capability, bootstrap generates a fresh nonce and sends a \`skarbiec.redeem.v1\` request with operation \`redeem\` to the broker's Unix socket. Its proof is the workload key's Ed25519 signature over \`SKARBIEC-WORKLOAD-PROOF\\0v1\\0\`, then the capability ID, nonce, workload ID and \`redeem\`, each ended by a NUL byte, then the authorization ID, which is empty for a bootstrap capability: exactly what Skarbiec verifies and Brama signs. Only an \`ok\` control response followed by exactly \`secret_len\` bytes is accepted.
 
-Control lines are limited to 4 KiB and credentials to 64 KiB. Broker reads and writes use the existing five-second I/O deadline. A redemption refusal currently reports \`capability redemption denied\`; the corresponding broker event provides the capability-side evidence.
+A control line is read to its newline and a credential to the length the broker states; nothing is cut and no clock decides. A redemption refusal reports \`capability redemption denied\`; Skarbiec's log names the check that refused it (\`skarbiec: redemption denied: <reason>\`).
 
 The fresh \`singularity-<uuid>\` runtime directory has mode \`0700\`. Its \`brama.hmac\`, \`brama.token\` and \`most.token\` files have mode \`0600\`. Cleanup overwrites and removes materialized files and removes the directory after success or failure.
 
