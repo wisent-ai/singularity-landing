@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build:review": "node scripts/check-command-coverage.mjs && next build",
     "build": "next build",
+    "typecheck": "tsc --noEmit",
     "docs:coverage": "node scripts/check-command-coverage.mjs",
     "start": "next start"
   },
