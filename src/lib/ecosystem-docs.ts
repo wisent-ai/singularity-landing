@@ -85,6 +85,8 @@ The initiative then goes to Jeden as one immutable request: \`jeden pursue --req
 
 With \`allow_release\`, the accepted commit's version is read from its \`.wisent-release.json\`, recorded, and submitted with \`stado release submit --source <checkout> --commit <commit> --version <version> --channel stable --json\`; an unanswered submission is resolved from \`stado release status\` and never resubmitted. After the run completes, each catalogued installation is read with \`stado product status\` and must report the accepted revision and readiness.
 
+Native release workers use \`stado product cargo\` and the immutable \`private-cargo-sources\` input instead of fetching private Git repositories. From a committed source checkout, publish and pin it with \`stado release catalog pin-input . --name private-cargo-sources --source . --revision HEAD --cargo --json\`, then commit the updated \`.wisent-release.json\` before submission. Repeat when locked private package names, versions or revisions change. Stado's [private Cargo input contract](https://stado.wisent.com/docs/builds#private-cargo-build-inputs) documents the matching desktop operation, checksums, missing or stale input refusals, and real publication qualification. Both publisher and worker must support the interface; an input receipt alone does not qualify a native build or installed runtime.
+
 ## Outcomes and controls
 
 After delivery, a model call compares post-release observations with the original expected outcome and rejection condition and records continue, change, maintain, stop or unknown. Missing telemetry is unknown. Later selection reads these outcomes.
