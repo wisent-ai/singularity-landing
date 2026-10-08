@@ -72,7 +72,7 @@ Only the three materialized paths are exported as \`BRAMA_HMAC_SECRET_FILE\`, \`
 \`singularity ticket\` writes what this bootstrap starts from. Every input is explicit; nothing is read from the environment or defaulted.
 
 \`\`\`bash
-singularity ticket key --out <absolute-private-key> --public-out <absolute-public-key>
+singularity ticket key --holder supervisor|workload --out <absolute-private-key> --public-out <absolute-public-key>
 singularity ticket sign \\
   --agent-id <id> --role <role> --environment <env> --host <host> --workload-id <id> \\
   --workload-key <workload-private-key> --broker-socket <absolute-socket> \\
@@ -85,7 +85,7 @@ singularity ticket sign \\
   --manifest-out <absolute-file> --signature-out <absolute-file> -- <singularity args>
 \`\`\`
 
-\`ticket key\` reads a fresh seed from \`/dev/urandom\` and writes the private key and its public half as new owner-only hex files (an existing file is refused). A supervisor's public half is the trust root; a workload's is what \`skarbiec grant issue --workload-public-key-file\` registers, and the three capability ids come from \`skarbiec grant capability\`. \`ticket sign\` fills the manifest from its flags, takes the executable's and the policy file's SHA-256, checks the manifest against the rules above before writing anything, signs the bytes under the version-2 domain with the supervisor key, writes manifest and signature as new owner-only files, and then runs the same check this bootstrap runs on its input. A ticket that check refuses is removed and the command fails with \`singularity-bootstrap would refuse the ticket written, so it was removed: <reason>\`. Both verbs answer JSON (or \`--text\`): the key paths and public hex, or the ticket paths, digests and validity window.
+\`ticket key\` reads a fresh seed from \`/dev/urandom\` and writes the private key as a new owner-only hex file and its public half as a new owner-only file in the encoding its reader requires (an existing file is refused). \`--holder supervisor\` writes the public half as hex: it is the trust root this bootstrap reads with \`--trust-root\`. \`--holder workload\` writes it as a PEM public key: \`skarbiec grant issue --workload-public-key-file\` refuses anything else (\`workload public key must be a PEM public key\`) and Skarbiec verifies every redemption proof against it with \`openssl pkeyutl -verify\`. The three capability ids come from \`skarbiec grant capability\`. \`ticket sign\` fills the manifest from its flags, takes the executable's and the policy file's SHA-256, checks the manifest against the rules above before writing anything, signs the bytes under the version-2 domain with the supervisor key, writes manifest and signature as new owner-only files, and then runs the same check this bootstrap runs on its input. A ticket that check refuses is removed and the command fails with \`singularity-bootstrap would refuse the ticket written, so it was removed: <reason>\`. Both verbs answer JSON (or \`--text\`): the key paths and public hex, or the ticket paths, digests and validity window.
 
 ## Deployment files
 
