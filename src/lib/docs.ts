@@ -63,7 +63,7 @@ For each capability, bootstrap generates a fresh nonce and sends a \`skarbiec.re
 
 A control line is read to its newline and a credential to the length the broker states; nothing is cut and no clock decides. A redemption refusal reports \`capability redemption denied\`; Skarbiec's log names the check that refused it (\`skarbiec: redemption denied: <reason>\`).
 
-The fresh \`singularity-<uuid>\` runtime directory has mode \`0700\`. Its \`brama.hmac\`, \`brama.token\` and \`most.token\` files have mode \`0600\`. Cleanup overwrites and removes materialized files and removes the directory after success or failure.
+The fresh \`singularity-<uuid>\` runtime directory has mode \`0700\`. Each credential is opened as a new owner-only file and unlinked before any secret byte is written. The retained descriptor carries the credential; write, sync or metadata failures cannot leave a named secret file. An unlink failure stops materialization before writing the secret. Closing the descriptor releases the unlinked file.
 
 ## Child environment
 
