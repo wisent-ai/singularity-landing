@@ -26,7 +26,7 @@ The read and control commands — \`status\`, \`opportunities\`, \`initiatives\`
 
 ## Where the portfolio lives
 
-The portfolio — metadata, records and spend reservations — lives in the fleet database \`singularity\`, every row keyed by the being's agent id, reached through Stado's shared connector: \`stado database resolve singularity\`, the Skarbiec route and the \`singularity-database-client\` bearer. A leftover \`ecosystem.sqlite3\` in the state directory is refused at startup.
+The portfolio — metadata, records and spend reservations — lives in the fleet database \`singularity\`, every row keyed by the being's agent id, reached through Stado's shared connector: \`stado database resolve singularity\`, the Skarbiec route and the \`singularity-database-client\` bearer. A leftover \`ecosystem.sqlite3\` in the state directory is refused at startup. Failure to inspect that pathname is also refused, with its path and filesystem cause: unknown legacy history is not treated as absent and does not open fresh fleet state.
 
 Each write stores the record and an \`event\` record naming the changed kind, id and content SHA-256 in one transaction. The state directory holds the owner lock \`ecosystem.lock\`, the control socket and the immutable request files handed to Jeden and Stado under \`requests/\`.
 
