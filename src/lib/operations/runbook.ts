@@ -151,5 +151,5 @@ For \`singularity\` and \`singularity-bootstrap\`:
 | 4 | State or I/O error. |
 | 5 | Tool, runtime or JSON error. |
 
-After launching a child, Bootstrap returns the child's exit status. Its manifest, digest and capability-redemption refusals use the classes above. MCP servers exit 1 on startup failure; later tool errors are in-band results with \`isError: true\`.`,
+On successful launch, Bootstrap replaces itself with the requested executable; that process determines the eventual exit status. Bootstrap's own manifest, digest, capability-redemption and failed-exec refusals use the classes above. MCP servers exit 1 on startup failure; later tool errors are in-band results with \`isError: true\`.`,
 };
