@@ -68,6 +68,8 @@ The fresh \`singularity-<uuid>\` runtime directory has mode \`0700\`. Each crede
 
 Creation, unlink, anonymous-descriptor write, sync and metadata inspection failures name the exact operation, destination and operating-system cause without credential contents. A rejected descriptor reports its observed regular-file status and permission mode. If unlink fails, only the empty file can remain because no secret bytes have been written.
 
+Cleanup unlinks leftover credential pathnames without opening or following them. It no longer allocates a file-sized overwrite buffer. Failure to remove the runtime directory refuses execution with the path and operating-system cause; cleanup during another refusal reports its own failure on stderr without replacing the original cause.
+
 ## Child environment
 
 The launcher starts with \`env_clear()\`. It restores a verified absolute \`HOME\`, a controlled \`PATH\` beginning with that owner's \`.local/bin\` and \`.stado/bin\`, and \`LANG\`/\`LC_ALL\`. The home must be owned by the current Unix principal and must not be group- or world-writable.
