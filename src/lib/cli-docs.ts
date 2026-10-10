@@ -64,9 +64,10 @@ Boot is deliberately strict:
 
 - Existing state without \`--resume\` is refused as \`state: state already exists at <path>; use --resume or a new directory\`.
 - \`--resume\` with no saved state is refused as \`state: resume requested but no state exists\`.
-- \`--resume\` with a different configured identity is refused as \`state: resume identity does not match configuration\`.
+- \`--resume\` with changed stable identity fields is refused as \`state: resume identity does not match configuration: ...\`, naming each changed field.
+- A policy sequence older than the saved sequence is refused with the stored and launched sequence.
 
-A fresh state directory without \`--resume\` creates a new being. A matching saved identity with \`--resume\` continues it.`;
+A fresh state directory without \`--resume\` creates a new being. Resume preserves the same stable identity while taking its workload key, executable/code/policy digests and nondecreasing policy sequence from the new launch. The [identity contract](/docs/concepts/identity) distinguishes these fields.`;
 
 export type CliDocPage = {
   slug: string;
