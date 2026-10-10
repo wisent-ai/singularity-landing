@@ -71,7 +71,7 @@ The launcher starts with \`env_clear()\`. It restores a verified absolute \`HOME
 
 The manifest supplies \`SINGULARITY_AGENT_ID\`, \`SINGULARITY_ROLE\`, \`SINGULARITY_ENVIRONMENT\`, \`SINGULARITY_HOST\`, \`SINGULARITY_WORKLOAD_ID\`, \`SINGULARITY_WORKLOAD_PUBLIC_KEY\`, \`SINGULARITY_EXECUTABLE_SHA256\`, \`SINGULARITY_CODE_SHA256\`, \`SINGULARITY_POLICY_SHA256\` and \`SINGULARITY_POLICY_SEQUENCE\`.
 
-Only the three materialized paths are exported as \`BRAMA_HMAC_SECRET_FILE\`, \`BRAMA_BEARER_TOKEN_FILE\` and \`MOST_SERVICE_TOKEN_FILE\`. The signed \`singularity_args\` array selects the command and its options, including an ecosystem policy path when launching the portfolio. The remaining parent environment is not inherited.
+The three inherited descriptors are named by \`SINGULARITY_BRAMA_HMAC_FD\`, \`SINGULARITY_BRAMA_BEARER_FD\` and \`SINGULARITY_MOST_TOKEN_FD\`; no materialized credential pathname is exported. The being validates distinct, unlinked, nonempty owner-only files before reading them, then restores close-on-exec. Only an explicit Singularity child handoff inherits them; ordinary tools do not. The signed \`singularity_args\` array selects the command and its options, including an ecosystem policy path when launching the portfolio. The remaining parent environment is not inherited.
 
 ## Issuing a launch ticket
 
