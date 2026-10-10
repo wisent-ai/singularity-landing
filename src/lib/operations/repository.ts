@@ -67,6 +67,8 @@ Before publishing, the remote main revision must equal either the recorded base 
 
 Other path, seal, check and command refusals are listed in [Runbook](runbook).
 
+Approved repository commands report their program path, working directory, process identity and start time on stderr while waiting for command completion and output EOF. The matching end line reports elapsed time; it is not a success verdict. The structured command result or refusal remains authoritative. Input bytes and command arguments are not copied into these wait diagnostics.
+
 ## Migration from isolated proposals
 
 Remove \`branch_prefix\` and \`github_head_owner\` from the policy; they are no longer accepted. Set \`base_branch\` to \`main\` and bind \`root\` to the one canonical checkout. \`pull_request_open\` is no longer a tool; unknown tool names are refused rather than redirected.
