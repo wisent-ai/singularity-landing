@@ -74,6 +74,8 @@ The manifest supplies \`SINGULARITY_AGENT_ID\`, \`SINGULARITY_ROLE\`, \`SINGULAR
 
 The three inherited descriptors are named by \`SINGULARITY_BRAMA_HMAC_FD\`, \`SINGULARITY_BRAMA_BEARER_FD\` and \`SINGULARITY_MOST_TOKEN_FD\`; no materialized credential pathname is exported. The being validates distinct, unlinked, nonempty owner-only files before reading them, then restores close-on-exec. Only an explicit Singularity child handoff inherits them; ordinary tools do not. The signed \`singularity_args\` array selects the command and its options, including an ecosystem policy path when launching the portfolio. The remaining parent environment is not inherited.
 
+The consumer checks each inherited file's observed length before converting it to an addressable allocation size and reserves that allocation fallibly. Inspection, allocation and read errors name the descriptor declaration, operation and cause, retaining the observed length where available without exposing credential bytes.
+
 ## Issuing a launch ticket
 
 \`singularity ticket\` writes what this bootstrap starts from. Every input is explicit; nothing is read from the environment or defaulted.
