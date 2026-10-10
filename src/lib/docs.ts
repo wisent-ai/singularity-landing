@@ -76,6 +76,8 @@ The three inherited descriptors are named by \`SINGULARITY_BRAMA_HMAC_FD\`, \`SI
 
 The consumer checks each inherited file's observed length before converting it to an addressable allocation size and reserves that allocation fallibly. Inspection, allocation and read errors name the descriptor declaration, operation and cause, retaining the observed length where available without exposing credential bytes.
 
+Invalid inherited files report regular-file status, link count, owner and effective owner, permissions and length. Metadata inspection and close-on-exec failures identify the descriptor declaration, descriptor number and operating-system cause.
+
 ## Issuing a launch ticket
 
 \`singularity ticket\` writes what this bootstrap starts from. Every input is explicit; nothing is read from the environment or defaulted.
