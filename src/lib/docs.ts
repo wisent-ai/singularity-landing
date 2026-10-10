@@ -20,10 +20,9 @@ export const docPages: readonly DocPage[] = [
     title: "Bootstrap",
     summary: "Verify a signed launch and acquire separate signing, authorization and Most credentials.",
     section: "Reference",
-    sourcePath: "docs/bootstrap.md",
     source: `# Bootstrap
 
-\`singularity-bootstrap\` verifies a signed launch manifest, proves its workload identity to Skarbiec, materializes three credentials in a private runtime directory, and launches the named executable with a controlled environment. It removes the credentials when the child exits.
+\`singularity-bootstrap\` verifies a signed launch manifest, proves its workload identity to Skarbiec, materializes three credentials as unlinked owner-only files, and replaces itself with the named executable under a controlled environment. No wrapper process remains to wait for a child; the inherited descriptors own the credentials' lifetime.
 
 ## Invocation
 
@@ -35,7 +34,7 @@ singularity-bootstrap \\
   --runtime-root <absolute-directory>
 \`\`\`
 
-The corresponding variables are \`SINGULARITY_BOOTSTRAP_MANIFEST\`, \`SINGULARITY_BOOTSTRAP_MANIFEST_SIG\`, \`SINGULARITY_BOOTSTRAP_TRUST_ROOT\` and \`SINGULARITY_RUNTIME_ROOT\`. Manifest, signature, trust root and workload private key must be owner-only files. The command returns the child's exit status.
+The corresponding variables are \`SINGULARITY_BOOTSTRAP_MANIFEST\`, \`SINGULARITY_BOOTSTRAP_MANIFEST_SIG\`, \`SINGULARITY_BOOTSTRAP_TRUST_ROOT\` and \`SINGULARITY_RUNTIME_ROOT\`. Manifest, signature, trust root and workload private key must be owner-only files. On successful exec the same process becomes the being, whose eventual exit status reaches the supervisor; a failed exec returns its operating-system cause.
 
 ## Signed launch version
 
