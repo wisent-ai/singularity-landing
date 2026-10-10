@@ -5,7 +5,7 @@ export const repositoryPage = {
   section: "Reference",
   source: `# Repo surface
 
-\`singularity-repo-mcp\` serves policy-bound repository operations over stdio MCP, protocol \`2024-11-05\`. Requests are bounded to 2 MiB. It uses the repository's existing canonical checkout on \`main\`; it does not create another checkout, a proposal branch, or a pull request.
+\`singularity-repo-mcp\` serves policy-bound repository operations over newline-delimited stdio MCP, protocol \`2024-11-05\`. It reads each complete request line without a product-specific byte ceiling. It uses the repository's existing canonical checkout on \`main\`; it does not create another checkout, a proposal branch, or a pull request.
 
 The final gate is **independent acceptance and qualified product delivery**. A successful push is not evidence that an installed product works. The ecosystem retains execution and delivery evidence separately; see [Ecosystem](ecosystem).
 
@@ -35,10 +35,10 @@ Unknown fields are rejected. The policy must be a regular, non-symlink file owne
 | Tool | Contract |
 |---|---|
 | \`workspace_create\` | Claim the canonical checkout using \`repo_id\`, \`workspace_id\` and \`request_id\`. The checkout must be clean, on main, have exactly one Git worktree, match the policy origin and have no executable Git filters. |
-| \`workspace_read\` | Read one bounded UTF-8 file within \`allowed_paths\`. |
-| \`workspace_apply_patch\` | Apply one bounded unified diff within \`allowed_paths\`; invalidate the previous seal and checks. |
-| \`workspace_diff\` | Return the bounded unified diff. |
-| \`workspace_seal\` | Stage allowed roots and record the exact Git tree and bounded diff. |
+| \`workspace_read\` | Read one complete UTF-8 regular file within \`allowed_paths\`; nonregular files, invalid UTF-8 and read failures are refused. |
+| \`workspace_apply_patch\` | Apply one unified diff within \`allowed_paths\`; invalidate the previous seal and checks. |
+| \`workspace_diff\` | Return the complete unified diff. |
+| \`workspace_seal\` | Stage allowed roots and record the exact Git tree and complete diff. |
 | \`workspace_check\` | Run a named fixed \`git_diff_check\` against the sealed index and retain tree-bound evidence. This is not a product test. |
 | \`commit_create\` | Commit the sealed index without restaging after every required check has successful evidence for that exact tree. |
 | \`branch_publish\` | Publish the recorded commit to main without force, then read the remote main revision back. |
