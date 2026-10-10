@@ -17,7 +17,7 @@ Mind import preserves the being's identity and authority. Its counts and attribu
 
 ## Ecosystem database and live owner
 
-The ecosystem stores its portfolio in \`ecosystem.sqlite3\` beneath the selected state directory. It uses SQLite write-ahead logging and full synchronization. The database retains observations, opportunities, reviews, initiatives, execution identities, outcomes, cost reservations and event records.
+The ecosystem portfolio lives in the fleet database \`singularity\`, reached through Stado's shared database connector and scoped by the being's agent id. It retains observations, opportunities, reviews, initiatives, execution identities, outcomes, reservations and event records. The state directory holds the owner lock, control socket and immutable execution request files, not a second portfolio database. See the authoritative [ecosystem storage contract](/docs/ecosystem#where-the-portfolio-lives).
 
 Use the owner interface for normal inspection:
 
@@ -29,9 +29,9 @@ Use the owner interface for normal inspection:
 
 These commands address the live owner through \`ecosystem.sock\`. An unavailable owner is a refusal, not permission to present a direct database read as a live response. The native **Ecosystem** screen uses the same owner and can remain available without the older being snapshot.
 
-The database schema is version two. Startup upgrades supported schema-one state transactionally, preserving old events and timestamps. Missing schema metadata on nonempty state is refused. Do not erase metadata, reservations or unknown outcomes to make a run appear clean.
+Startup refuses a leftover \`ecosystem.sqlite3\` rather than opening or silently importing it. It also refuses unsupported schema versions and nonempty fleet state without schema metadata. Preserve legacy files and resolve the refusal through a supported migration path; this page does not claim that startup migrates them.
 
-Collections are bounded and paginated. Read complete records through the digest-pinned fragment interface rather than treating a shortened preview as the whole record. [Ecosystem](ecosystem) documents limits, continuation arguments, migration, admission controls and the real qualification requirements.
+Read complete records through the owner interface rather than treating a summary as the whole record. [Ecosystem](/docs/ecosystem) owns the current collection, fragment, admission and qualification contracts.
 
 ## Repository store
 
