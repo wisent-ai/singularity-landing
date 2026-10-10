@@ -62,6 +62,8 @@ For each capability, bootstrap generates a fresh nonce and sends a \`skarbiec.re
 
 A control line is read to its newline and a credential to the length the broker states; nothing is cut and no clock decides. Local failures name the broker socket, failed operation and underlying I/O or JSON cause. A control-read failure includes the observed byte count; truncated credentials and trailing data name the declared length without printing secret bytes. A broker refusal reports its observed wire version and status; Skarbiec's log names the authorization check that refused it.
 
+The declared credential length is reserved with a fallible allocation before reading its bytes. An allocation refusal reports the broker, declared length and allocator cause, rather than deliberately aborting on an infallible allocation. The serialized redemption request is erased on scope exit, including connection failures.
+
 The fresh \`singularity-<uuid>\` runtime directory has mode \`0700\`. Each credential is opened as a new owner-only file and unlinked before any secret byte is written. The retained descriptor carries the credential; write, sync or metadata failures cannot leave a named secret file. An unlink failure stops materialization before writing the secret. Closing the descriptor releases the unlinked file.
 
 ## Child environment
