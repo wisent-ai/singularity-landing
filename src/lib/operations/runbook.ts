@@ -13,9 +13,9 @@ Check [Configuration](configuration) for identity and release-pinning inputs and
 
 | Message | Interpretation |
 |---|---|
-| \`configuration: <label> is not a valid immutable identifier\` | The identity component is empty, too long, or contains unsupported characters. |
+| \`configuration: <label> is not a valid immutable identifier\` | The identity component is empty or contains unsupported characters. |
 | \`configuration: <label> must be 64 lowercase hexadecimal characters\` | A key or digest has the wrong encoding. |
-| \`configuration: stimulus must be at most 65536 bytes and contain no NUL\` | The observation exceeds its input bound. |
+| \`configuration: stimulus must contain no NUL\` | The observation contains a NUL; no byte ceiling is imposed. |
 | \`configuration: workspace: <io-error>\` / \`workspace must be a directory\` | The workspace does not resolve to an existing directory. |
 | \`configuration: prices and balance cannot be negative\` | A configured decimal is negative. |
 | \`configuration: temperature must be finite and not negative\` | A stated temperature is negative or not a number. Its upper end is the provider's, which refuses a value outside its range itself. |

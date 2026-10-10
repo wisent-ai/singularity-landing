@@ -44,7 +44,7 @@ const commonRuntimeRefusals = `## Configuration refusals
 
 Before contacting a surface or writing being state, the runtime refuses with the exact relevant message when:
 
-- stimulus exceeds 65536 bytes or contains NUL: \`configuration: stimulus must be at most 65536 bytes and contain no NUL\`;
+- stimulus contains NUL: \`configuration: stimulus must contain no NUL\`; the runtime imposes no byte ceiling;
 - the workspace cannot be resolved or is not a directory: \`configuration: workspace: <error>\` or \`configuration: workspace must be a directory\`;
 - a starting balance or price is negative: \`configuration: prices and balance cannot be negative\`;
 - a stated temperature is not finite or is negative: \`configuration: temperature must be finite and not negative\` (the upper end is the provider's, which refuses a value outside its range with its own message);
@@ -242,7 +242,7 @@ For a brand-new being, add \`--import-file /path/to/mind.json\` to the fully con
 }
 \`\`\`
 
-The arrays are optional, but the document must contain at least one real item. \`source.kind\`, \`source.id\`, and every item \`id\` are trimmed identifiers of at most 256 bytes without control characters. Item IDs are unique across all three arrays. Text is trimmed, nonempty, NUL-free, and at most 65,536 bytes. The file must be a regular non-symbolic-link JSON file no larger than 16 MiB, with no unknown fields and at most 1,000 total items.
+All three arrays are required and may be empty, but the document must contain at least one real item. \`source.kind\`, \`source.id\`, and every item \`id\` are trimmed, nonempty identifiers without control characters. Item IDs are unique across all three arrays. Text is trimmed, nonempty and NUL-free. The file must be regular, not a symbolic link, and contain valid JSON with no unknown fields. No item-count, identifier-length, text-length or file-size ceiling is imposed.
 
 ## Duplicates and retained state
 
