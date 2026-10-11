@@ -34,5 +34,9 @@ Refusal is not permission to delete or recreate the existing state. Correct the 
 
 Inspect the persisted identity and mind after a real managed resume with renewed credentials, then exercise a stable-identity mismatch and a policy rollback against an isolated being. Retain the launch revision, command results and state. Source presence and a refused model connection do not prove that a managed being resumed and completed a cycle.
 
+The registered \`managed-resume\` journey in \`tests/bootstrap/resume.rs\` exercises the actual CLI parser and public runtime bootstrap/shutdown against a real signed Las release and dedicated credential declarations. Build with \`WISENT_SOURCE_COMMIT\`, set matching \`SINGULARITY_TEST_SOURCE_REVISION\`, \`SINGULARITY_TEST_DEPENDENCY_PURPOSE=isolated-qualification\` and \`SINGULARITY_TEST_RESUME_LAUNCHES\`, then run \`cargo test --test managed-resume -- --ignored --nocapture\`. The JSON fixture supplies complete \`once\` argument arrays for \`initial\`, \`renewed\`, \`rollback\` and \`changed_identity\`; it must describe actual launch keys, executable digests, policies, credential paths and signed Las inputs, not synthesized dependency answers.
+
+The journey owns only its state, workspace and Las watermark under \`.build/bootstrap-resume/\`. It retains before/after state and reports exact refusal causes, checks that renewed identity is persisted without resetting the existing life, and requires byte-identical state after policy and stable-identity refusals. This is initialization qualification: it does not issue production capabilities, run an autonomous model cycle or observe Desktop.
+
 The CLI resume gate owns this behavior. Desktop reads the resulting persisted state; it does not issue an alternative identity migration. See [configuration](/docs/configuration), [the being](/docs/being) and [state inspection](/docs/walkthrough-state).`,
 };
