@@ -77,6 +77,8 @@ The review first applies the policy: an estimated cost outside the initiative li
 
 An accepted opportunity becomes an initiative only while fewer than \`max_active\` are open, while no open initiative holds the same product (it waits with \`product_scope_busy\`), and, for product and research work, while the exploration allocation covers it. Each model call's request, evidence and answer are retained; a call whose answer was recorded settles on restart without asking again.
 
+Each of these model calls — the proposal, its review and the outcome judgement — declares one function, \`answer\`, whose parameters are the judgement's JSON Schema, and reads the arguments of that one call: the proposal's opportunity or null, its kind one of feature, product, research, growth or maintenance; the review's accept, rationale, evidence and rejection reasons; the outcome's decision, one of continue, change, maintain, stop or unknown. A reply that calls no function, another function, or arguments outside the schema refuses the judgement with the reply named; no answer is JSON read out of text. The product identifier a proposal names is checked by the same rule provisioning applies.
+
 ## Execution and delivery
 
 A product opportunity is first provisioned: \`stado product create --request <file> --allow-create --json\` for the private repositories \`wisent-ai/<id>\`, \`wisent-ai/<id>-desktop\` and \`wisent-ai/<id>-landing\`. Provisioning is not implementation; the executor still owes the product.
