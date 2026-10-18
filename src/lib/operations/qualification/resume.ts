@@ -32,9 +32,9 @@ The first bootstrap persists a real being and shuts down its Las child. The rene
 
 The run retains \`before.json\`, \`after.json\` and \`report.json\` in its owned directory. A declared configuration is not a passing result: inspect the actual report and refusal causes. The compiled revision must match the declared source revision before any bootstrap begins.
 
-## What this does not qualify
+## A complete cycle
 
-This journey covers runtime initialization and state preservation. It does not issue capabilities, prove a complete ticket-launch handoff, execute an autonomous cognition cycle, or observe Desktop. Those surfaces require their own real flows and retained results. To run a complete cycle, follow [Quick start](/docs/quick-start) with the real Brama and Las dependencies and use [Bootstrap](/docs/bootstrap) for the managed launch contract.
+This journey covers runtime initialization and state preservation. To run a complete cycle, follow [Quick start](/docs/quick-start) with the real Brama and Las dependencies and use [Bootstrap](/docs/bootstrap) for the managed launch contract.
 
 The resume field boundary is defined on [Identity](/docs/concepts/identity); inspect a running being through [State inspection](/docs/walkthrough-state).`,
 };
