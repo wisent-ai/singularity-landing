@@ -13,6 +13,14 @@ The being's \`state.json\` uses schema \`being-v1\`. It contains its immutable i
 
 \`activity.jsonl\` records lifecycle and action events. A cycle count can increase before its model request succeeds. Likewise, a stopped process does not prove that an intended external action completed. Inspect model usage, tool outcomes and actual downstream evidence rather than inferring success from a counter or final process state.
 
+The native **Being** activity feed reads the entire journal. Invalid UTF-8
+refuses the file read; malformed JSON, a non-object record or a record without
+\`type\` names its physical line and cause instead of showing a partial
+history. An empty journal is empty; the final line terminator is not another
+record. The screen retains the read failure until a later successful refresh.
+Only a journal that does not exist is treated as not yet created. Permission,
+metadata and file-read failures remain visible errors, not an empty feed.
+
 Mind import preserves the being's identity and authority. Its counts and attribution are documented in [Import existing mind](import-existing-mind).
 
 ## Ecosystem database and live owner
