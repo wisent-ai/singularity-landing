@@ -1,3 +1,5 @@
+import { ticketSource, ticketSummary } from "./cli/ticket";
+
 const requiredRuntimeInvocation = String.raw`--agent-id <id> \
   --role <role> \
   --environment <environment> \
@@ -34,7 +36,7 @@ The command requires these options, or their named environment-variable equivale
 - State and loop: \`--stimulus <text>\`, optional \`--import-file <singularity-mind-import-v1.json>\`, the required balance, host-price and cycle-pause declarations above, required \`--state-dir <dir>\` and \`--workspace <dir>\` (\`SINGULARITY_STATE_DIR\`, \`SINGULARITY_WORKSPACE\`; no directory is assumed), and \`--resume\`. The starting balance applies to a new being; resume keeps its saved budget. A spawned child receives the parent's resolved initial allowance, host price and cycle pause, including values supplied through CLI flags; these are accounting declarations, not transfers of funds. A cycle runs until the model answers without calling a tool; there is no round limit, and every round is charged at Brama's catalog price for the model that served it. On \`run\` and \`once\`, the complete import is validated before a new state is created and persisted before the first model call.
 - Brama: required \`--brama-url <url>\` (\`BRAMA_BASE_URL\`; no address is assumed and a missing one exits 2), required \`--brama-model <model|any|any-vision-capable|task:name>\` (\`BRAMA_MODEL\`; no model is assumed), optional \`--max-tokens <n>\` (\`BRAMA_MAX_TOKENS\`; omitted, the model's own output limit from Brama's catalog applies and cost admission quotes against it), and optional \`--temperature <t>\` (\`BRAMA_TEMPERATURE\`; omitted, none is sent and the provider's default applies). Token prices are not configured: each round is charged at the catalog price of the model that served it.
 - Las: required \`--las-command <program>\`, \`--las-entrypoint <file>\` and \`--las-only <csv>\` (\`LAS_COMMAND\`, \`LAS_MCP_ENTRYPOINT\`, \`LAS_ONLY\`; no program, checkout location or surface set is assumed, and an empty \`--las-only\` serves every surface Las offers), \`--las-skip <csv>\`, and \`--required-surfaces skarbiec,finance\`.
-- Most and transport: \`--most-url <url>\` (\`MOST_BASE_URL\`), required whenever a Most credential is configured through optional \`--most-token-file <owner-only-file>\` or the bootstrap handoff, and otherwise refused as \`a Most credential is configured but MOST_BASE_URL (--most-url) is not\`. A spawned child being receives the parent's Brama and Most addresses. Brama, Most and MCP calls wait for their own answer or explicit cancellation; the removed \`--mcp-timeout-secs\`, \`--http-timeout-secs\` and \`--shutdown-grace-secs\` options are no longer accepted.
+- Most and transport: \`--most-url <url>\` (\`MOST_BASE_URL\`), required whenever a Most credential is configured through optional \`--most-token-file <owner-only-file>\` or the bootstrap handoff, and otherwise refused as \`a Most credential is configured but MOST_BASE_URL (--most-url) is not\`. A spawned child being receives the parent's Brama and Most addresses. Brama, Most and MCP calls wait for their own answer or explicit cancellation.
 
 Managed bootstrap and Las children retain an absolute \`HOME\` owned by the current Unix principal and not writable by another principal. Their executable search starts with \`$HOME/.local/bin\` and \`$HOME/.stado/bin\`, followed by the fixed operating-system and package-manager directories. A missing or unsafe home is refused, not replaced with another account's home. Ecosystem execution passes its configured Brama bearer, signing secret and agent identity into Jeden explicitly, with request state isolated under the ecosystem owner's directory.
 
@@ -276,5 +278,12 @@ singularity onboarding [--reset] \\
 \`--reset\` discards recorded walkthrough progress and evidence before opening the first screen. \`--import-file\` invokes the exact [\`singularity import\`](import) state operation before presentation; \`--state-dir\` selects its destination and otherwise follows \`SINGULARITY_STATE_DIR\` or \`.singularity\`.
 
 The import is optional. Skipping it leaves the existing or empty mind usable. When supplied, the entire document must be accepted and persisted before the walkthrough starts; the command prints the import report and stops immediately on any conflict or rejection. Import success does not complete onboarding. The journey's first-success fact remains \`autonomous_cycle_completed\`, recorded only after a real \`singularity once\` cycle completes.`,
+  },
+  {
+    slug: "cli/ticket",
+    title: "singularity ticket",
+    summary: ticketSummary,
+    section: "CLI commands",
+    source: ticketSource,
   },
 ] as const;
