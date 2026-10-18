@@ -72,8 +72,10 @@ const criterion = process.env.SINGULARITY_LANDING_TEST_CRITERION?.trim();
 assert.equal(Boolean(defectId), Boolean(criterion),
   "SINGULARITY_LANDING_TEST_DEFECT and SINGULARITY_LANDING_TEST_CRITERION are named together or not at all");
 if (defectId) {
-  const uncommitted = git(["status", "--porcelain", "--", "src/lib", "src/content/site.json", "tests/docs"]);
-  assert.equal(uncommitted, "", `commit src/lib, src/content/site.json and tests/docs before qualification:\n${uncommitted}`);
+  // The pages and the domain are read through git at HEAD; only this journey
+  // runs from the working tree, so only it must be committed.
+  const uncommitted = git(["status", "--porcelain", "--", "tests/docs"]);
+  assert.equal(uncommitted, "", `commit tests/docs before qualification:\n${uncommitted}`);
   const digest = (file) => createHash("sha256").update(readFileSync(file)).digest("hex");
   const out = path.join(root, ".build", "real-tests", "docs-live", new Date().toISOString().replace(/[:.]/g, ""));
   mkdirSync(out, { recursive: true });
