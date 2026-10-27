@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generator": "@wisent-ai/landing-cli@0.2.0",
-  "generatedAt": "2026-08-21T05:58:05.437Z",
+  "generatedAt": "2026-08-27T16:08:18.154Z",
   "product": "Singularity",
   "briefDigest": "0338e9afc66b05fecdfaf78ae36b7803f9a30db2495b04498c7622a6bc1140bc",
   "contextDigest": "73c3eafc2f3fda60fd667b527ea0496293d0b7ede95900aef4cfd97b3d4bf578",
@@ -10,7 +10,7 @@
   "componentRuntimeDigest": "f39cc9e6221de9adf5e82d6f16eb3cbdf46e4b58f1d9a805fecc0a1ae717c657",
   "planDigest": "639fe08acdf1c25762b3744b8849f98ed2ba910e659912c4aad90f4fea214e4d",
   "tokens": {
-    "path": "/Users/lukaszbartoszcze/Documents/CodingProjects/Wisent/wisent-components/tokens.json",
+    "path": "../wisent-components/tokens.json",
     "digest": "29a00929f58750f9c7a2f59936bdd59bd22e439f76b5575ca57a0f20513db9df"
   },
   "fonts": [],
@@ -24,6 +24,7 @@
     "src/app/page.tsx",
     "src/app/robots.ts",
     "src/app/sitemap.ts",
+    "src/components/echo-analytics.tsx",
     "src/components/landing-components.js",
     "src/content/components.json",
     "src/content/plan.json",
