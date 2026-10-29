@@ -13,7 +13,7 @@ A cycle appends its framing observation, calls Brama, executes returned tools an
 - The cycle counter advances and \`cycle_started\` is journaled. The framing message includes balance, earnings, net profit, current model and every recorded action, newest first. The optional stimulus is appended only for the first cycle.
 - Cognition reconstructs the complete [mind](/docs/concepts/mind) and sends it with the catalogue to Brama. The runtime obtains the price of the model that actually served the completion, then debits model usage and measured call-time host cost before executing tools.
 - A reply without tool calls is saved and reported as \`completed\`, with its \`final_content\`.
-- Otherwise tools execute in order. Each outcome becomes a conversation message and action record; tracked Most resource IDs, tool events and eligible revenue are retained. State is saved after each tool, then cognition continues subject to solvency.
+- Otherwise tools execute in order. Each outcome becomes a conversation message and action record; tracked Most resource IDs and tool events are retained. State is saved after each tool, then cognition continues subject to solvency.
 
 The report carries cycle, status, final content, balance, earned amount, net profit, total tokens and action names. \`tool_round_limit\` is not a current result: there is no hidden default count at which the runtime abandons an ongoing cycle.
 
@@ -21,7 +21,7 @@ The report carries cycle, status, final content, balance, earned amount, net pro
 
 Model cost comes from Brama's caller-scoped catalog for the served model, including cache usage. Host cost uses the measured call duration and declared \`SINGULARITY_INSTANCE_USD_PER_HOUR\`. Exact-decimal accounting records \`model_completed\` and \`cost_debited\`; missing pricing is a refusal rather than an assumed free call.
 
-Only results from \`finance__*\` or \`trading__*\` tools can supply credited revenue. The runtime searches their result for a positive \`revenue_usd\` or \`realized_profit_usd\` and journals accepted credit as \`revenue_credited\`. Other outputs have no financial effect. See [earning and cost record](/docs/concepts/earnings) for the accounting fields and [Finance](/docs/finance) for authority over actual money movement.
+No tool output credits revenue. Whatever a tool answers, including a \`finance__*\` or \`trading__*\` tool and whatever fields its answer carries, the budget's \`earned\` and \`remaining\` stay as they are: the only thing that may credit the budget is a typed settlement record issued and verified by the finance surface, and no finance surface issues one yet. See [earning and cost record](/docs/concepts/earnings) for the accounting fields and [Finance](/docs/finance) for authority over actual money movement.
 
 ## Continuous operation and failures
 
