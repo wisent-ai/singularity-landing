@@ -21,9 +21,9 @@ Check [Configuration](configuration) for identity and release-pinning inputs and
 | \`configuration: temperature must be finite and not negative\` | A stated temperature is negative or not a number. Its upper end is the provider's, which refuses a value outside its range itself. |
 | \`configuration: LAS entrypoint not found: <path>\` | The configured entrypoint is not an existing file. |
 | \`configuration: LAS release manifest must be an absolute regular file\` | The manifest, signature or trust-store file is invalid. The watermark must also be absolute. |
-| \`configuration: BRAMA_BASE_URL must use http or https\` | The gateway URL uses an unsupported scheme; the same rule applies to Most. |
+| \`configuration: BRAMA_BASE_URL must use http or https, not <scheme>\` | The gateway URL uses the named unsupported scheme; the same rule applies to Most. |
 | \`secret file: not a regular file: <path>\` | A credential does not name a regular file. |
-| \`secret file: <path> must not be group/world accessible\` | The credential permissions are too broad. |
+| \`secret file: <path> must not be group/world accessible; observed mode <mode>; chmod go-rwx it\` | The credential permissions are too broad; \`chmod go-rwx <path>\` clears the group and other bits. |
 | \`secret file: <path> is empty\` | No credential remains after trailing newlines are stripped. |
 | \`secret file: BRAMA_HMAC_SECRET_FILE or WISENT_APP_AGENT_AUTH_SECRET is required\` | The runtime has no signing secret. Authorization is separate; see Bootstrap. |
 

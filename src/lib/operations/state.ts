@@ -37,7 +37,7 @@ Use the owner interface for normal inspection:
 
 These commands address the live owner through \`ecosystem.sock\`. An unavailable owner is a refusal, not permission to present a direct database read as a live response. The native **Ecosystem** screen uses the same owner and can remain available without the older being snapshot.
 
-Startup refuses a leftover \`ecosystem.sqlite3\` rather than opening or silently importing it. It also refuses unsupported schema versions and nonempty fleet state without schema metadata. Preserve legacy files and resolve the refusal through a supported migration path; this page does not claim that startup migrates them.
+Startup refuses a leftover \`ecosystem.sqlite3\` rather than opening or silently importing it, naming the file and the state directory: Singularity does not copy that file, so carry its history into the fleet database or move the file out of the state directory before starting the being again. It also refuses unsupported schema versions and nonempty fleet state without schema metadata.
 
 Read complete records through the owner interface rather than treating a summary as the whole record. [Ecosystem](/docs/ecosystem) owns the current collection, fragment, admission and qualification contracts.
 

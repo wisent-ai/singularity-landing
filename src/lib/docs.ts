@@ -131,8 +131,9 @@ Each command has its own page with inputs, state effects, output and refusals. R
 | [singularity tools](/docs/cli/tools) | Print the dynamic and built-in tool catalog. |
 | [singularity import](/docs/cli/import) | Import attributed memory without replacing identity or authority. |
 | [singularity onboarding](/docs/cli/onboarding) | Run first use with an optional validated mind import. |
+| [singularity activity](/docs/cli/activity) | Read a being's activity journal without changing its state. |
 | [singularity ecosystem](/docs/cli/ecosystem) | Own and inspect a durable portfolio under a fixed delegation. |
-| [singularity ticket](/docs/bootstrap#issuing-a-launch-ticket) | Write keys and the signed launch ticket singularity-bootstrap starts a managed being from. |
+| [singularity ticket](/docs/cli/ticket) | Write keys and the signed launch ticket singularity-bootstrap starts a managed being from. |
 
 The ecosystem group includes \`run\`, \`status\`, \`opportunities\`, \`initiatives\`, \`records\`, \`record\`, \`explain\`, \`pause\` and \`resume\`. Its [availability and qualification boundaries](/docs/ecosystem) are explicit; a source commit is not a delivered or qualified installation.
 

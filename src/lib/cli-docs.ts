@@ -1,3 +1,4 @@
+import { activitySource, activitySummary } from "./cli/activity";
 import { ticketSource, ticketSummary } from "./cli/ticket";
 
 const requiredRuntimeInvocation = String.raw`--agent-id <id> \
@@ -56,7 +57,7 @@ Before contacting a surface or writing being state, the runtime refuses with the
 - an immutable identity component is invalid: \`configuration: <label> is not a valid immutable identifier\`;
 - a public key or digest is malformed: \`configuration: <label> must be 64 lowercase hexadecimal characters\`;
 - neither Brama secret source exists: \`secret file: BRAMA_HMAC_SECRET_FILE or WISENT_APP_AGENT_AUTH_SECRET is required\`;
-- a secret path is not a regular file, is group/world accessible, or is empty: \`secret file: not a regular file: <path>\`, \`secret file: <path> must not be group/world accessible\`, or \`secret file: <path> is empty\`.
+- a secret path is not a regular file, is group/world accessible, or is empty: \`secret file: not a regular file: <path>\`, \`secret file: <path> must not be group/world accessible; observed mode <mode>; chmod go-rwx it\`, or \`secret file: <path> is empty\`.
 
 Clap refuses a missing required option before runtime code executes. Configuration and secret refusals exit 2; upstream Brama, Las/MCP, or Most failures exit 3; state or I/O failures exit 4; tool, runtime, or JSON failures exit 5.`;
 
@@ -230,7 +231,7 @@ singularity import \\
 
 For a brand-new being, add \`--import-file /path/to/mind.json\` to the fully configured \`singularity run\` or \`singularity once\` command. The runtime validates the document before creating state and persists accepted records before its first model call.
 
-\`--state-dir\` also reads \`SINGULARITY_STATE_DIR\` and defaults to \`.singularity\`. The being must already exist. If \`singularity run\` owns that state, the command submits the document to its owner-only local service. Otherwise it uses the same import operation with the stopped being's \`ActivityStore\`.
+\`--state-dir\` also reads \`SINGULARITY_STATE_DIR\`; no directory is assumed. The being must already exist. If \`singularity run\` owns that state, the command submits the document to its owner-only local service. Otherwise it uses the same import operation with the stopped being's \`ActivityStore\`.
 
 ## Accepted document
 
@@ -275,7 +276,7 @@ singularity onboarding [--reset] \\
   [--state-dir /path/to/being-state]
 \`\`\`
 
-\`--reset\` discards recorded walkthrough progress and evidence before opening the first screen. \`--import-file\` invokes the exact [\`singularity import\`](import) state operation before presentation; \`--state-dir\` selects its destination and otherwise follows \`SINGULARITY_STATE_DIR\` or \`.singularity\`.
+\`--reset\` discards recorded walkthrough progress and evidence before opening the first screen. \`--import-file\` invokes the exact [\`singularity import\`](import) state operation before presentation; \`--state-dir\` selects its destination, also read from \`SINGULARITY_STATE_DIR\`; no directory is assumed.
 
 The import is optional. Skipping it leaves the existing or empty mind usable. When supplied, the entire document must be accepted and persisted before the walkthrough starts; the command prints the import report and stops immediately on any conflict or rejection. Import success does not complete onboarding. The journey's first-success fact remains \`autonomous_cycle_completed\`, recorded only after a real \`singularity once\` cycle completes.`,
   },
@@ -285,5 +286,12 @@ The import is optional. Skipping it leaves the existing or empty mind usable. Wh
     summary: ticketSummary,
     section: "CLI commands",
     source: ticketSource,
+  },
+  {
+    slug: "cli/activity",
+    title: "singularity activity",
+    summary: activitySummary,
+    section: "CLI commands",
+    source: activitySource,
   },
 ] as const;
