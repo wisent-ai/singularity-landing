@@ -67,7 +67,7 @@ Before publishing, the remote main revision must equal either the recorded base 
 
 Other path, seal, check and command refusals are listed in [Runbook](runbook).
 
-Approved repository commands use the shared \`stado-wait\` diagnostics: \`czekam\` announces the operation, location and UTC start on stderr; \`koniec czekania\` or \`blad czekania\` records elapsed time and any cause under the same wait identity. Input bytes and command arguments are not copied into these diagnostics. A policy check's declared \`timeout_secs\` covers stdin, command exit and both output streams reaching EOF, including pipes retained by descendants. On failure or policy expiry, output readers are cancelled and process-group termination is requested; cleanup failures are reported instead of hidden. Transport completion does not imply a successful Git exit or product qualification.
+Approved repository commands use the shared \`stado-wait\` diagnostics: \`czekam\` announces the operation, location and UTC start on stderr; \`koniec czekania\` or \`blad czekania\` records elapsed time and any cause under the same wait identity. Input bytes and command arguments are not copied into these diagnostics. A command, a policy check included, runs until Git answers: no clock ends it, and its stdin, its exit and both output streams reaching EOF (pipes retained by descendants included) are each waited for and announced. A check policy declares only its \`kind\`, and any other field in it is refused by name. Output is kept whole. On failure, output readers are cancelled and process-group termination is requested; cleanup failures are reported instead of hidden. Transport completion does not imply a successful Git exit or product qualification.
 
 ## Migration from isolated proposals
 
