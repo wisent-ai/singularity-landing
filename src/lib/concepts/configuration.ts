@@ -31,11 +31,11 @@ Missing declarations are parser refusals before state creation or service access
 
 A cycle continues until the model stops calling tools or solvency fails; there is no configured model-round count. The ecosystem owner's control, reconciliation and dispatch timers use the declared cycle interval, which must be positive for \`ecosystem run\`. Its signed policy separately owns observation, review and allocation values.
 
-## Brama
+## Model service
 
-\`BRAMA_BASE_URL\` and \`BRAMA_MODEL\` are required. The model must be an advertised model or supported selector; no gateway address or model is assumed.
+\`BRAMA_BASE_URL\` is optional. Named, it is Brama's address; unnamed, a being never dials Brama itself: it asks \`stado capabilities resolve inference --consumer singularity\` and uses Brama's route when Brama answers, or the OpenAI-compatible endpoint declared in its place (\`capabilities.inference.endpoint.url\`), which serves the model it declares and is sent the \`token\` of the role \`capabilities.inference.endpoint.key_role\` names. When no alternative answers, the launch is refused naming each one with its route and cause. On Brama's route \`BRAMA_MODEL\` is required and must be an advertised model or supported selector; no gateway address or model is assumed.
 
-Signing and caller authorization are distinct. \`BRAMA_HMAC_SECRET_FILE\` supplies the signing secret; \`BRAMA_BEARER_TOKEN_FILE\` supplies the caller bearer. A managed bootstrap can hand off each through an unlinked owner-only descriptor. Explicit secret-file options take precedence over their handoffs. Outside a handoff, the existing \`WISENT_APP_AGENT_AUTH_SECRET\` input can supply signing material, but it does not replace caller authorization: a missing bearer is refused with that distinction named.
+On Brama's route, signing and caller authorization are distinct. \`BRAMA_HMAC_SECRET_FILE\` supplies the signing secret; \`BRAMA_BEARER_TOKEN_FILE\` supplies the caller bearer. A managed bootstrap can hand off each through an unlinked owner-only descriptor. Explicit secret-file options take precedence over their handoffs. Outside a handoff, the existing \`WISENT_APP_AGENT_AUTH_SECRET\` input can supply signing material, but it does not replace caller authorization: a missing bearer is refused with that distinction named. An endpoint in Brama's place needs neither and is sent neither.
 
 Secret files must be nonempty regular files with owner-only access. Managed descriptors must also be unlinked and remain close-on-exec except for the explicit child-being inheritance path.
 
