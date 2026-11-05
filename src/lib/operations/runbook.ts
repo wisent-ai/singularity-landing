@@ -135,7 +135,7 @@ The [Repo surface](repo-surface) documents canonical-checkout admission, ownersh
 | \`policy_denied: check is not allowlisted\` | The check name is not declared. |
 | \`invalid_state: required check "<name>" has not run\` / \`lacks successful exact evidence\` | A check lacks successful evidence for the exact sealed tree. |
 | \`invalid_state: workspace is already committed\` | One workspace represents one commit. |
-| \`command_failed: <operation> failed (exit <code>): <stderr>\` | The named Git operation failed. Retain its actual error. |
+| \`command_failed: <operation> failed (exit <code>): <stderr>\` | Git exited with that code on the named operation, and its stderr says why. Retain its actual error. |
 
 A Git whitespace check is not a product test, independent acceptance or installation proof. \`published: true\` records the publication readback; it is not a live service-health result.
 
